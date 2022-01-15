@@ -33,10 +33,10 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {} //ssusususususususususuususususus
+  public void teleopPeriodic() {} //stable comment
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {} // unstable comment
 
   @Override
   public void disabledPeriodic() {}
