@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {} // unstable comment
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {}// third comment
 
   @Override
   public void testInit() {}
