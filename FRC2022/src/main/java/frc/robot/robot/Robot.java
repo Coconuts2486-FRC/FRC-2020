@@ -2,12 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.driveTrain;
-import frc.robot.SwerveDrive;
+import frc.robot.robot.driveTrain;
+import frc.robot.robot.SwerveDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
