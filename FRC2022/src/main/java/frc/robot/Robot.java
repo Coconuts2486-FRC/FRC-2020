@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.driveTrain;
+import frc.robot.SwerveDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,7 +21,10 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+
+    
+  }
 
   @Override
   public void robotPeriodic() {}
@@ -30,13 +36,22 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+
+    driveTrain.init();
+  }
 
   @Override
-  public void teleopPeriodic() {} 
+  public void teleopPeriodic() {
+
+    //driveTrain.strafe();
+    //driveTrain.telemetry();
+    SwerveDrive.drive(map.driver.getX(), map.driver.getY(), map.driver.getTwist());
+
+  }
 
   @Override
-  public void disabledInit() {} // unstable comment
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}// third comment
