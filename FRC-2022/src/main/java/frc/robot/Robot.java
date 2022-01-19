@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.SwerveDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,10 +22,15 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+
+    
+  }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("Integrated Sensor Reading", map.rotateBR.getSelectedSensorPosition());
+  }
 
   @Override
   public void autonomousInit() {}
@@ -30,10 +39,20 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+
+    SwerveDrive.init();
+  }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    SwerveDrive.drive(map.driver.getX(), map.driver.getY(), map.driver.getTwist());
+
+    if (map.driver.getRawButton(11)){
+      map.gyro.setYaw(0);
+    }
+  }
 
   @Override
   public void disabledInit() {}
