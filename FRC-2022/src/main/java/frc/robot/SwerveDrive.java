@@ -33,20 +33,20 @@ public class SwerveDrive {
     public static void drive (double x1, double y1, double x2) {
 
         //get ypr
-        double[] ypr_deg = new double [3];
+        double[] ypr_deg = new double [3]; // ypr is Yaw, pitch, and roll in degrees
 
         //get robot angle
         map.gyro.getYawPitchRoll(ypr_deg);
-        double robotAngle = ypr_deg[0] * Math.PI / 180;
+        double robotAngle = ypr_deg[0] * Math.PI / 180; // converts degrees to radians
 
 
-        double L = 17.5;
-        double W = 17.5;
+        double L = 17.5; // length from one motor axel to another
+        double W = 17.5; // width
 
-        double r = Math.sqrt ((L * L) + (W * W));
+        double r = Math.sqrt ((L * L) + (W * W)); // radius from center of robot to a motor axel
         //y1 *= -1;
 
-        double x3 = y1 * Math.cos(robotAngle) + x1 * Math.sin(robotAngle);
+        double x3 = y1 * Math.cos(robotAngle) + x1 * Math.sin(robotAngle); //
         x1 = -y1 * Math.sin(robotAngle) + x1 * Math.cos(robotAngle);
         y1 = x3;
     
