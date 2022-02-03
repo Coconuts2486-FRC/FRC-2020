@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.SwerveDrive;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,16 +18,19 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  @Override
-  public void robotInit() {
 
-    
-  }
+  private Module backRight = new Module (Map.rotateBR, Map.driveBR, Map.encoderBR);
+  private Module backLeft = new Module (Map.rotateBL, Map.driveBL, Map.encoderBL);
+  private Module frontRight = new Module (Map.rotateFR, Map.driveFR, Map.encoderFR);
+  private Module frontLeft = new Module (Map.rotateFL, Map.driveFL, Map.encoderFL);
+
+  private Swerve swerve = new Swerve(backRight, backLeft, frontRight, frontLeft);
 
   @Override
-  public void robotPeriodic() {
-    SmartDashboard.putNumber("Integrated Sensor Reading", map.rotateBR.getSelectedSensorPosition());
-  }
+  public void robotInit() {}
+
+  @Override
+  public void robotPeriodic() {}
 
   @Override
   public void autonomousInit() {}
@@ -41,24 +41,25 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    SwerveDrive.init();
+    swerve.init();
   }
+
 
   @Override
   public void teleopPeriodic() {
 
-    SwerveDrive.drive(map.driver.getX(), map.driver.getY(), map.driver.getTwist());
-
-    if (map.driver.getRawButton(11)){
-      map.gyro.setYaw(0);
-    }
+    swerve.drive(Map.driver.getX(), Map.driver.getY(), Map.driver.getTwist());
+    swerve.realignToField(Map.zeroGyro);
   }
 
   @Override
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+    swerve.disabled();
+  }
 
   @Override
   public void testInit() {}
