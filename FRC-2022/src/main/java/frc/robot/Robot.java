@@ -30,7 +30,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {}
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    Autonomous.SmartDashPrintData();
+  }
 
   @Override
   public void autonomousInit() {}
