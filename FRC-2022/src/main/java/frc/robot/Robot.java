@@ -19,10 +19,10 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-  private Module backRight = new Module (Map.rotateBR, Map.driveBR, Map.encoderBR);
-  private Module backLeft = new Module (Map.rotateBL, Map.driveBL, Map.encoderBL);
-  private Module frontRight = new Module (Map.rotateFR, Map.driveFR, Map.encoderFR);
-  private Module frontLeft = new Module (Map.rotateFL, Map.driveFL, Map.encoderFL);
+  private Module backRight = new Module (RobotMap.rotateBR, RobotMap.driveBR, RobotMap.encoderBR);
+  private Module backLeft = new Module (RobotMap.rotateBL, RobotMap.driveBL, RobotMap.encoderBL);
+  private Module frontRight = new Module (RobotMap.rotateFR, RobotMap.driveFR, RobotMap.encoderFR);
+  private Module frontLeft = new Module (RobotMap.rotateFL, RobotMap.driveFL, RobotMap.encoderFL);
 
   private Swerve swerve = new Swerve(backRight, backLeft, frontRight, frontLeft);
 
@@ -48,8 +48,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    swerve.drive(Map.driver.getX(), Map.driver.getY(), Map.driver.getTwist());
-    swerve.realignToField(Map.zeroGyro);
+    swerve.drive(RobotMap.driver.getX(), RobotMap.driver.getY(), RobotMap.driver.getTwist());
+    swerve.realignToField(RobotMap.zeroGyro);
   }
 
   @Override

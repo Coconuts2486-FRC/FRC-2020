@@ -18,7 +18,7 @@ public class Swerve {
     // initialize drivetrain
     public void init() {
 
-        Map.gyro.setYaw(0);
+        RobotMap.gyro.setYaw(0);
         backRight.init();
         backLeft.init();
         frontRight.init();
@@ -42,7 +42,7 @@ public class Swerve {
         double[] ypr_deg = new double[3];
 
         // get robot angle
-        Map.gyro.getYawPitchRoll(ypr_deg);
+        RobotMap.gyro.getYawPitchRoll(ypr_deg);
         double robotAngle = ypr_deg[0] * Math.PI / 180;
 
         // dimensions of wheelbase and trackwidth
@@ -84,9 +84,9 @@ public class Swerve {
     // account for gyro drift by rezeroing gyro
     public void realignToField(int button) {
 
-        if (Map.driver.getRawButton(button)) {
+        if (RobotMap.driver.getRawButton(button)) {
 
-            Map.gyro.setYaw(0);
+            RobotMap.gyro.setYaw(0);
         }
     }
 

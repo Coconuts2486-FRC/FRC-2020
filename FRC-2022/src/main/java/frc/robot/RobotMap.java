@@ -5,9 +5,9 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class Map{
-   
-   // motors
+public class RobotMap {
+
+    // motors
    public static int rotateBL = 8;
    public static int rotateBR = 5;
    public static int rotateFL = 6;
@@ -30,4 +30,5 @@ public class Map{
    // gyro
    public static TalonSRX gyroTalon = new TalonSRX(30);
    public static PigeonIMU gyro = new PigeonIMU(gyroTalon);
+    
 }
