@@ -6,7 +6,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Map{
-
+   
    // motors
    public static int rotateBL = 8;
    public static int rotateBR = 5;
