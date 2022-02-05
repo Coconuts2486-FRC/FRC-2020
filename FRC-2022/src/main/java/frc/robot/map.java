@@ -19,7 +19,7 @@ public class Map{
 
    // joysticks
    public static Joystick driver = new Joystick(0); 
-   public static int zeroGyro = 11;
+   public static int zeroGyro = 2;
 
    // encoders
    public static int encoderFL = 20;

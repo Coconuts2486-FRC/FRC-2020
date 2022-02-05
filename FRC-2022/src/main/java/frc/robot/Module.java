@@ -1,10 +1,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.PIDController;
 
@@ -12,7 +11,7 @@ public class Module {
 
     private TalonFX directionMotor;
     private TalonFX driveMotor;
-    private TalonSRX encoder;
+    private CANCoder encoder;
     private PIDController angleController;
     private double pi = Math.PI;
 
@@ -20,15 +19,14 @@ public class Module {
 
         this.directionMotor = new TalonFX(directionMotor);
         this.driveMotor = new TalonFX(driveMotor);
-        this.encoder = new TalonSRX(encoder);
+        this.encoder = new CANCoder(encoder);
         this.angleController = new PIDController(0.4, 0, 0);
     }
 
     // sets encoders to zero and sets motors to brake
     public void init() {
 
-        encoder.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
-        encoder.setSelectedSensorPosition(0);
+        encoder.setPosition(0);
         directionMotor.setNeutralMode(NeutralMode.Brake);
         driveMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -60,7 +58,7 @@ public class Module {
         angleController.enableContinuousInput(-pi, pi);
 
         // get the current reading of the direction encoder
-        double currentAngle = (encoder.getSelectedSensorPosition() / 4096) * (pi * 2);
+        double currentAngle = (encoder.getPosition() / 360) * (pi * 2);
         double setpoint = 0;
 
         // find the shortest path to a set module angle
