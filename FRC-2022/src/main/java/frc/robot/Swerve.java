@@ -8,6 +8,7 @@ public class Swerve {
     private Module frontLeft;
 
     public Swerve(Module backRight, Module backLeft, Module frontRight, Module frontLeft) {
+     
         this.backRight = backRight;
         this.backLeft = backLeft;
         this.frontRight = frontRight;
@@ -80,10 +81,11 @@ public class Swerve {
 
     }
 
-    // account for gyro drift
+    // account for gyro drift by rezeroing gyro
     public void realignToField(int button) {
 
         if (Map.driver.getRawButton(button)) {
+
             Map.gyro.setYaw(0);
         }
     }

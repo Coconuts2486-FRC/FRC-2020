@@ -35,12 +35,14 @@ public class Module {
 
     // set motors to coast while disabled
     public void disable(){
+      
         directionMotor.setNeutralMode(NeutralMode.Coast);
         driveMotor.setNeutralMode(NeutralMode.Coast);
     }
 
     // calculates nearest angle
     public double nearestAngle(double currentAngle, double targetAngle) {
+      
         // get direction
         double direction = (targetAngle % (2 * pi)) - (currentAngle % (2 * pi));
 
