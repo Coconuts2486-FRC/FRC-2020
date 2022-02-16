@@ -18,14 +18,6 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-
-  private Module backRight = new Module (RobotMap.rotateBR, RobotMap.driveBR, RobotMap.encoderBR);
-  private Module backLeft = new Module (RobotMap.rotateBL, RobotMap.driveBL, RobotMap.encoderBL);
-  private Module frontRight = new Module (RobotMap.rotateFR, RobotMap.driveFR, RobotMap.encoderFR);
-  private Module frontLeft = new Module (RobotMap.rotateFL, RobotMap.driveFL, RobotMap.encoderFL);
-
-  private Swerve swerve = new Swerve(backRight, backLeft, frontRight, frontLeft);
-
   @Override
   public void robotInit() {}
 
@@ -41,15 +33,17 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    swerve.init();
+    RobotMap.swerve.init();
+    RobotMap.intake.init();
+    Mortar.init();
   }
-
 
   @Override
   public void teleopPeriodic() {
 
-    swerve.drive(RobotMap.driver.getX(), RobotMap.driver.getY(), RobotMap.driver.getTwist());
-    swerve.realignToField(RobotMap.zeroGyro);
+    RobotMap.swerve.run();
+    RobotMap.intake.run();
+    Mortar.run();
   }
 
   @Override
@@ -58,7 +52,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
 
-    swerve.disabled();
+    RobotMap.swerve.disabled();
   }
 
   @Override

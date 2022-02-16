@@ -2,11 +2,15 @@ package frc.robot;
 
 public class Swerve {
 
+    public static double speedMultiplier = 0.5;
+
+    // swerve modules
     private Module backRight;
     private Module backLeft;
     private Module frontRight;
     private Module frontLeft;
 
+    // swerve constructor
     public Swerve(Module backRight, Module backLeft, Module frontRight, Module frontLeft) {
      
         this.backRight = backRight;
@@ -55,29 +59,38 @@ public class Swerve {
         x = -y * Math.sin(robotAngle) + x * Math.cos(robotAngle);
         y = x0;
 
-        // vector algebra
+        // chassis vector transformed to wheel vectors
         double a = x - Twist * (L / r);
         double b = x + Twist * (L / r);
         double c = y - Twist * (W / r);
         double d = y + Twist * (W / r);
 
-        // calculated module speeds
+        // calculated module speeds based on wheel vectors
         double backRightSpeed = Math.sqrt((a * a) + (d * d));
         double backLeftSpeed = Math.sqrt((a * a) + (c * c));
         double frontRightSpeed = Math.sqrt((b * b) + (d * d));
         double frontLeftSpeed = Math.sqrt((b * b) + (c * c));
 
-        // calculated module angles
+        // calculated module angles based on wheel vectors
         double backRightAngle = Math.atan2(a, d);
         double backLeftAngle = Math.atan2(a, c);
         double frontRightAngle = Math.atan2(b, d);
         double frontLeftAngle = Math.atan2(b, c);
 
-        // give modules a speed and angle
-        backRight.drive(backRightSpeed, backRightAngle);
-        backLeft.drive(backLeftSpeed, backLeftAngle);
-        frontRight.drive(frontRightSpeed, frontRightAngle);
-        frontLeft.drive(frontLeftSpeed, frontLeftAngle);
+        if (RobotMap.driver.getRawButton(RobotMap.cutSpeed)){
+
+            speedMultiplier = 0.3;
+        }
+        else{
+
+            speedMultiplier = 1;
+        }
+
+        // set speed and angle each module operates at
+        backRight.drive(backRightSpeed, backRightAngle, speedMultiplier);
+        backLeft.drive(backLeftSpeed, backLeftAngle, speedMultiplier);
+        frontRight.drive(frontRightSpeed, frontRightAngle, speedMultiplier);
+        frontLeft.drive(frontLeftSpeed, frontLeftAngle, speedMultiplier);
 
     }
 
@@ -90,4 +103,9 @@ public class Swerve {
         }
     }
 
+    public void run(){
+
+        drive(RobotMap.driver.getX(), RobotMap.driver.getY(), RobotMap.driver.getTwist());
+        realignToField(RobotMap.zeroGyro);
+    }
 }

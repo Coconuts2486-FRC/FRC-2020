@@ -9,12 +9,14 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Module {
 
+    // module components
     private TalonFX directionMotor;
     private TalonFX driveMotor;
     private CANCoder encoder;
     private PIDController angleController;
     private double pi = Math.PI;
 
+    // module constructor
     public Module(int directionMotor, int driveMotor, int encoder){
 
         this.directionMotor = new TalonFX(directionMotor);
@@ -52,16 +54,16 @@ public class Module {
     }
 
     //module control
-    public void drive(double speed, double angle){
+    public void drive(double speed, double angle, double speedModifier){
 
         // make pid continuous on (-pi, pi)
         angleController.enableContinuousInput(-pi, pi);
 
-        // get the current reading of the direction encoder
+        // get the current position reading of the direction encoder
         double currentAngle = (encoder.getPosition() / 360) * (pi * 2);
         double setpoint = 0;
 
-        // find the shortest path to a set module angle
+        // find the shortest path to a module setpoint angle
         double setpointAngle = nearestAngle(currentAngle, angle);
         double setpointAngleOpposite = nearestAngle(currentAngle, angle + pi);
 
@@ -75,8 +77,7 @@ public class Module {
         double optimizedAngle = angleController.calculate(currentAngle, setpoint);
 
         // set the drive speed and direction of the module
-        driveMotor.set(ControlMode.PercentOutput, speed);
+        driveMotor.set(ControlMode.PercentOutput, speed * speedModifier);
         directionMotor.set(ControlMode.PercentOutput, optimizedAngle);
-    }
-    
+    } 
 }
