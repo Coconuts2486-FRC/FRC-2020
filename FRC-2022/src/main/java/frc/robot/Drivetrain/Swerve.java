@@ -2,6 +2,7 @@ package frc.robot.Drivetrain;
 
 
 import frc.robot.RobotMap;
+import frc.robot.Vision.Pixy;
 import frc.robot.Vision.Track;
 
 public class Swerve {
@@ -118,8 +119,9 @@ public class Swerve {
         double twist = 0.0;
         double y = 0.0;
         double x = RobotMap.driver.getX();
+        double twistAdjustment = Track.adjustYaw();
 
-        if (RobotMap.driver.getRawButton(RobotMap.track)) {
+        if (RobotMap.driver.getRawButton(RobotMap.trackTarget)) {
 
             twist = 0.0;
         } else {
@@ -133,7 +135,15 @@ public class Swerve {
             y = RobotMap.driver.getY();
         }
 
-        drive(x, y + Track.adjustPosition(), twist + Track.adjustYaw());
+        if (RobotMap.driver.getRawButton(RobotMap.trackBall) && Pixy.seesBall()){
+
+            twistAdjustment = Pixy.adjustToBall();
+        } else{
+
+            twistAdjustment = Track.adjustYaw();
+        }
+
+        drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
         realignToField(RobotMap.zeroGyro);
     }
 }

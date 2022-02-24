@@ -34,7 +34,7 @@ public class Track{
                 double tx = LimeLight.getX();
                 double steering_adjust = 0.0;
 
-                if (joystick.getRawButton(RobotMap.track) && LimeLight.isTarget()) {
+                if (joystick.getRawButton(RobotMap.trackTarget) && LimeLight.isTarget()) {
                         double heading_error_X = -tx;
 
                         if (tx > 1.0) {

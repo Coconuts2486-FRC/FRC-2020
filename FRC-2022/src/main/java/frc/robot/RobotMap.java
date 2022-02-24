@@ -3,7 +3,10 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
@@ -40,14 +43,14 @@ public class RobotMap {
    // controllers
    public static Joystick driver = new Joystick(0); 
    public static int intakeLift = 1;
-   public static int track = 2;
+   public static int trackTarget = 2;
+   public static int trackBall = 3;
    public static int zeroGyro = 11;
    public static int cutSpeed = 12;
 
    public static XboxController operator = new XboxController(1);
    public static int led = 1;
    public static int scoreLow = 6;
-
 
    // encoders
    public static int encoderFL = 22;
@@ -58,6 +61,10 @@ public class RobotMap {
    // gyro
    public static TalonSRX gyroTalon = new TalonSRX(0);
    public static PigeonIMU gyro = new PigeonIMU(gyroTalon);
+
+   // pixy
+   public static DigitalInput pixyDigitalInput = new DigitalInput(0);
+   public static AnalogInput pixyAnalogInput = new AnalogInput(1);
 
    // modules
    public static Module backRight = new Module (rotateBR, driveBR, encoderBR);
