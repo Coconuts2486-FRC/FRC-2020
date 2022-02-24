@@ -1,4 +1,8 @@
-package frc.robot;
+package frc.robot.Drivetrain;
+
+
+import frc.robot.RobotMap;
+import frc.robot.Vision.Track;
 
 public class Swerve {
 
@@ -12,7 +16,7 @@ public class Swerve {
 
     // swerve constructor
     public Swerve(Module backRight, Module backLeft, Module frontRight, Module frontLeft) {
-     
+
         this.backRight = backRight;
         this.backLeft = backLeft;
         this.frontRight = frontRight;
@@ -55,9 +59,16 @@ public class Swerve {
         double r = Math.sqrt((L * L) + (W * W));
 
         // field centric adjustment
-        double x0 = y * Math.cos(robotAngle) + x * Math.sin(robotAngle);
-        x = -y * Math.sin(robotAngle) + x * Math.cos(robotAngle);
-        y = x0;
+        if (RobotMap.operator.getRawButton(RobotMap.scoreLow)) {
+
+            x = x * 1;
+            y = y * -1;
+        } else {
+
+            double x0 = y * Math.cos(robotAngle) + x * Math.sin(robotAngle);
+            x = -y * Math.sin(robotAngle) + x * Math.cos(robotAngle);
+            y = x0;
+        }
 
         // chassis vector transformed to wheel vectors
         double a = x - Twist * (L / r);
@@ -77,11 +88,10 @@ public class Swerve {
         double frontRightAngle = Math.atan2(b, d);
         double frontLeftAngle = Math.atan2(b, c);
 
-        if (RobotMap.driver.getRawButton(RobotMap.cutSpeed)){
+        if (RobotMap.driver.getRawButton(RobotMap.cutSpeed)) {
 
             speedMultiplier = 0.3;
-        }
-        else{
+        } else {
 
             speedMultiplier = 1;
         }
@@ -103,9 +113,27 @@ public class Swerve {
         }
     }
 
-    public void run(){
+    public void run() {
 
-        drive(RobotMap.driver.getX(), RobotMap.driver.getY(), RobotMap.driver.getTwist());
+        double twist = 0.0;
+        double y = 0.0;
+        double x = RobotMap.driver.getX();
+
+        if (RobotMap.driver.getRawButton(RobotMap.track)) {
+
+            twist = 0.0;
+        } else {
+            twist = RobotMap.driver.getTwist();
+        }
+
+        if (RobotMap.driver.getRawButton(RobotMap.scoreLow)) {
+
+            y = 0.0;
+        } else {
+            y = RobotMap.driver.getY();
+        }
+
+        drive(x, y + Track.adjustPosition(), twist + Track.adjustYaw());
         realignToField(RobotMap.zeroGyro);
     }
 }

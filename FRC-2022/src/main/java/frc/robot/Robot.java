@@ -19,7 +19,9 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+
+  }
 
   @Override
   public void robotPeriodic() {}
@@ -35,7 +37,7 @@ public class Robot extends TimedRobot {
 
     RobotMap.swerve.init();
     RobotMap.intake.init();
-    Mortar.init();
+    RobotMap.mortar.init();
   }
 
   @Override
@@ -43,7 +45,7 @@ public class Robot extends TimedRobot {
 
     RobotMap.swerve.run();
     RobotMap.intake.run();
-    Mortar.run();
+    RobotMap.mortar.run();
   }
 
   @Override

@@ -1,12 +1,14 @@
-package frc.robot;
+package frc.robot.Vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.RobotMap;
 
 /**
  * LimeLight
  */
 public class LimeLight {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    public static boolean led = false;
 
     public static double getX() {
         // Returns the X axis of the target
@@ -33,5 +35,32 @@ public class LimeLight {
         double a1 = Math.atan(((h2-h1)/distance))- LimeLight.getY();
 
         return a1;
+    }
+
+    public static void ledOn(){
+
+        table.getEntry("ledmode").setNumber(3);
+    }
+
+    public static void ledOff(){
+
+        table.getEntry("ledmode").setNumber(1);
+    }
+
+    public static void ledControl(int button){
+
+        if (RobotMap.operator.getRawButtonPressed(button)){
+            if (!led){
+
+                LimeLight.ledOn();
+                led = true;
+            }
+            else{
+
+                LimeLight.ledOff();
+                led = false;
+            }
+
+        }
     }
 }

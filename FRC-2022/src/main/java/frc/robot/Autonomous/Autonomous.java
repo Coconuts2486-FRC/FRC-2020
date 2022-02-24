@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Autonomous;
 
 public class Autonomous {
 
