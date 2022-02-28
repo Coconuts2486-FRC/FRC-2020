@@ -40,7 +40,7 @@ public class Module {
         driveMotor.setNeutralMode(NeutralMode.Coast);
     }
 
-    // calculates nearest angle
+    // calculates fastest path to target angle relative to current angle
     public double nearestAngle(double currentAngle, double targetAngle) {
       
         // get direction

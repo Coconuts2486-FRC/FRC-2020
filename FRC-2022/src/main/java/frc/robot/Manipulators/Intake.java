@@ -3,6 +3,7 @@ package frc.robot.Manipulators;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -28,35 +29,32 @@ public class Intake {
         this.lift = new Solenoid(1, PneumaticsModuleType.REVPH, lift);
     }
 
+    // initializes intake components
     public void init(){
-
         intakeMain.setNeutralMode(NeutralMode.Brake);
         lowerMortarIntake.setNeutralMode(NeutralMode.Brake);
         upperMortarIntake.setNeutralMode(NeutralMode.Brake);
         lowerMortarIntake.setInverted(true);
+        lift.set(false);
     }
 
+    // intake control
     public void run(){
 
-        RobotMap.mortarVelocity.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 10);
+        RobotMap.mortarVelocity.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
 
-        if(RobotMap.driver.getRawButton(3) || RobotMap.driver.getRawButton(4) || RobotMap.driver.getRawButton(5) || RobotMap.driver.getRawButton(6)){
-
-            intakeMain.set(ControlMode.PercentOutput, 0.9);
-        }else{
-
-            intakeMain.set(ControlMode.PercentOutput, 0);
-        }
-
-        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) && RobotMap.mortarVelocity.getSelectedSensorVelocity() > 3300){
+        /*if (RobotMap.operator.getRawButton(RobotMap.scoreLow) && RobotMap.mortarVelocity.getSelectedSensorVelocity() > 3700 || RobotMap.operator.getRawButton(RobotMap.scoreHigh) && RobotMap.mortarVelocity.getSelectedSensorVelocity() > 5600){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, -0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
+            intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else{
             lowerMortarIntake.set(ControlMode.PercentOutput, 0);
             upperMortarIntake.set(ControlMode.PercentOutput, 0);
-        }
+            intakeMain.set(ControlMode.PercentOutput, 0);
+        }*/
 
+        // intake arm control
         if (RobotMap.driver.getRawButtonPressed(RobotMap.intakeLift)){
             if (!pistonactive){
 
@@ -71,6 +69,22 @@ public class Intake {
 
         }
 
-        
+        if (RobotMap.driver.getRawButton(5)){
+
+            intakeMain.set(ControlMode.PercentOutput, 0.5);
+        } else{
+
+            intakeMain.set(ControlMode.PercentOutput, 0);
+        }
+
+        if (RobotMap.driver.getRawButton(6)){
+
+            lowerMortarIntake.set(ControlMode.PercentOutput, -0.5);
+            upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
+        } else{
+
+            lowerMortarIntake.set(ControlMode.PercentOutput, 0);
+            upperMortarIntake.set(ControlMode.PercentOutput, 0);
+        }
     }
 }   

@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Track{
          
+        // tracking components
         // d = (h2-h1) / tan(a1+a2)
         public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         public static final double cameraHeight = 14.5; // inches
@@ -18,6 +19,7 @@ public class Track{
         public static Joystick joystick = RobotMap.driver;
         public static double lastpos = 0;
 
+        // gets distance limelight is from target
         // 4ft
         public static double getDistance() {
                 double ty = table.getEntry("ty").getDouble(0.0);
@@ -27,6 +29,7 @@ public class Track{
                 return distance;
         }
 
+        // returns how much the swerve needs to turn to align itself with the goal
         public static double adjustYaw() {
                 SmartDashboard.putNumber("lastPos", lastpos);
                 double Kp = -0.03;
@@ -47,15 +50,16 @@ public class Track{
                 return steering_adjust;
         }
 
+        // returns how far the swerve most travel to be within 6-7 feet of the target
         public static double adjustPosition() {
 
                 double Kp = -0.03;
                 double min_command = 0.05;
-                double ty = LimeLight.getY();
+                double ty = LimeLight.getY() * 27;
                 double heading_error_Y = -ty;
                 double distance_adjust = 0.0;
 
-                if (RobotMap.operator.getRawButton(RobotMap.scoreLow) && LimeLight.isTarget()) {
+                if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh) && LimeLight.isTarget()) {
 
                         if (ty > 1.0) {
                                 distance_adjust = Kp * heading_error_Y - min_command;

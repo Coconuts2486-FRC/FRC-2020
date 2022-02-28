@@ -19,7 +19,7 @@ public class LimeLight {
 
     public static double getY() {
         // Returns the Y axis of the target
-        return table.getEntry("ty").getDouble(0.0); // translated degrees -27 to 27 to a value between -1 and 1
+        return table.getEntry("ty").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
     }
 
     public static boolean isTarget() {
@@ -37,16 +37,19 @@ public class LimeLight {
         return a1;
     }
 
+    // turns LEDs on
     public static void ledOn(){
 
         table.getEntry("ledmode").setNumber(3);
     }
 
+    // turns LEDs off
     public static void ledOff(){
 
         table.getEntry("ledmode").setNumber(1);
     }
 
+    // controls state of LEDs
     public static void ledControl(int button){
 
         if (RobotMap.operator.getRawButtonPressed(button)){

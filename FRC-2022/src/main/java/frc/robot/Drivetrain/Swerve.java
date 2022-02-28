@@ -7,6 +7,7 @@ import frc.robot.Vision.Track;
 
 public class Swerve {
 
+    // swerve components
     public static double speedMultiplier = 0.5;
 
     // swerve modules
@@ -60,7 +61,7 @@ public class Swerve {
         double r = Math.sqrt((L * L) + (W * W));
 
         // field centric adjustment
-        if (RobotMap.operator.getRawButton(RobotMap.scoreLow)) {
+        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
 
             x = x * 1;
             y = y * -1;
@@ -114,13 +115,16 @@ public class Swerve {
         }
     }
 
+    // field, goal, and ball centric control
     public void run() {
 
+        // drive inputs
         double twist = 0.0;
         double y = 0.0;
         double x = RobotMap.driver.getX();
         double twistAdjustment = Track.adjustYaw();
 
+        // goal centric assist
         if (RobotMap.driver.getRawButton(RobotMap.trackTarget)) {
 
             twist = 0.0;
@@ -128,13 +132,15 @@ public class Swerve {
             twist = RobotMap.driver.getTwist();
         }
 
-        if (RobotMap.driver.getRawButton(RobotMap.scoreLow)) {
+        // distance assist for firing at 6-7 feet for low and high port
+        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
 
             y = 0.0;
         } else {
             y = RobotMap.driver.getY();
         }
 
+        // pixy centric assist
         if (RobotMap.driver.getRawButton(RobotMap.trackBall) && Pixy.seesBall()){
 
             twistAdjustment = Pixy.adjustToBall();
