@@ -32,7 +32,7 @@ public class Track{
         // returns how much the swerve needs to turn to align itself with the goal
         public static double adjustYaw() {
                 SmartDashboard.putNumber("lastPos", lastpos);
-                double Kp = -0.03;
+                double Kp = -0.032;
                 double min_command = 0.05;
                 double tx = LimeLight.getX();
                 double steering_adjust = 0.0;
@@ -53,7 +53,7 @@ public class Track{
         // returns how far the swerve most travel to be within 6-7 feet of the target
         public static double adjustPosition() {
 
-                double Kp = -0.03;
+                double Kp = -0.032;
                 double min_command = 0.05;
                 double ty = LimeLight.getY() * 27;
                 double heading_error_Y = -ty;

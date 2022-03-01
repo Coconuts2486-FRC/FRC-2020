@@ -81,7 +81,7 @@ public class Intake {
 
             lowerMortarIntake.set(ControlMode.PercentOutput, -0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
-        } else{
+        } else {
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0);
             upperMortarIntake.set(ControlMode.PercentOutput, 0);

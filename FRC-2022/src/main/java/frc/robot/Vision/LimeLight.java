@@ -1,6 +1,7 @@
 package frc.robot.Vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -19,7 +20,9 @@ public class LimeLight {
 
     public static double getY() {
         // Returns the Y axis of the target
-        return table.getEntry("ty").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
+        SmartDashboard.putNumber("rounded", Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f);
+        return Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f;
+       // return table.getEntry("ty").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
     }
 
     public static boolean isTarget() {
