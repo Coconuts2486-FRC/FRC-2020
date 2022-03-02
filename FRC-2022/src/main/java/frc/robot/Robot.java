@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Autonomous.Autonomous;
 import frc.robot.Vision.LimeLight;
 import frc.robot.Vision.Track;
 
@@ -22,12 +23,12 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {
-
-  }
+  public void robotInit() {}
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    Autonomous.recordAuto();
+  }
 
   @Override
   public void autonomousInit() {}
@@ -38,7 +39,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    //RobotMap.swerve.init();
+    RobotMap.swerve.init();
     RobotMap.intake.init();
     RobotMap.mortar.init();
   }
@@ -46,12 +47,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //RobotMap.swerve.run();
+    RobotMap.swerve.run();
     RobotMap.intake.run();
     RobotMap.mortar.run();
-    SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
-    SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());
+    // SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
+    // SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());
   }
 
   @Override
@@ -60,7 +61,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
 
-    //RobotMap.swerve.disabled();
+    RobotMap.swerve.disabled();
   }
 
   @Override
