@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    //RobotMap.swerve.init();
+    RobotMap.swerve.init();
     RobotMap.intake.init();
     RobotMap.mortar.init();
   }
@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //RobotMap.swerve.run();
+    RobotMap.swerve.run();
     RobotMap.intake.run();
     RobotMap.mortar.run();
     SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
 
-    //RobotMap.swerve.disabled();
+    RobotMap.swerve.disabled();
   }
 
   @Override

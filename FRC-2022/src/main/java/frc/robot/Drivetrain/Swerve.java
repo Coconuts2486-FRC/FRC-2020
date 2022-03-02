@@ -1,6 +1,8 @@
 package frc.robot.Drivetrain;
 
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.RobotMap;
 import frc.robot.Vision.Pixy;
 import frc.robot.Vision.Track;
@@ -32,7 +34,7 @@ public class Swerve {
         backRight.init();
         backLeft.init();
         frontRight.init();
-        frontLeft.init();
+        frontLeft.init();    
     }
 
     // disables brake mode
@@ -109,7 +111,7 @@ public class Swerve {
     // account for gyro drift by rezeroing gyro
     public void realignToField(int button) {
 
-        if (RobotMap.driver.getRawButton(button)) {
+        if (RobotMap.driverElite.getRawButton(button)) {
 
             RobotMap.gyro.setYaw(0);
         }
@@ -121,15 +123,24 @@ public class Swerve {
         // drive inputs
         double twist = 0.0;
         double y = 0.0;
-        double x = RobotMap.driver.getX();
+        double x = RobotMap.driverElite.getRawAxis(4);
         double twistAdjustment = Track.adjustYaw();
 
+        // deadband
+        /*if (RobotMap.driverElite.getRawAxis(0) < 0.25 || RobotMap.driverElite.getRawAxis(0) > -0.25){
+
+            twist = 0.0;
+        } else{
+
+            twist = RobotMap.driverElite.getRawAxis(0);
+        }*/
+
         // goal centric assist
-        if (RobotMap.driver.getRawButton(RobotMap.trackTarget)) {
+        if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget)) {
 
             twist = 0.0;
         } else {
-            twist = RobotMap.driver.getTwist();
+            twist = RobotMap.driverElite.getRawAxis(0);
         }
 
         // distance assist for firing at 6-7 feet for low and high port
@@ -137,11 +148,11 @@ public class Swerve {
 
             y = 0.0;
         } else {
-            y = RobotMap.driver.getY();
+            y = RobotMap.driverElite.getRawAxis(5);
         }
 
         // pixy centric assist
-        if (RobotMap.driver.getRawButton(RobotMap.trackBall) && Pixy.seesBall()){
+        if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
 
             twistAdjustment = Pixy.adjustToBall();
         } else{
@@ -149,7 +160,8 @@ public class Swerve {
             twistAdjustment = Track.adjustYaw();
         }
 
+        // drive inputs
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
-        realignToField(RobotMap.zeroGyro);
+        realignToField(RobotMap.eliteZeroGyro);
     }
 }

@@ -1,6 +1,7 @@
 package frc.robot.Vision;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.networktables.NetworkTable;
@@ -16,7 +17,7 @@ public class Track{
         public static final double angle1 = 28.9;
         public static double angle2 = 1;
         public static int x = 0;
-        public static Joystick joystick = RobotMap.driver;
+        public static XboxController joystick = RobotMap.driverElite;
         public static double lastpos = 0;
 
         // gets distance limelight is from target
@@ -37,7 +38,7 @@ public class Track{
                 double tx = LimeLight.getX();
                 double steering_adjust = 0.0;
 
-                if (joystick.getRawButton(RobotMap.trackTarget) && LimeLight.isTarget()) {
+                if (joystick.getRawButton(RobotMap.eliteTrackTarget) && LimeLight.isTarget()) {
                         double heading_error_X = -tx;
 
                         if (tx > 1.0) {

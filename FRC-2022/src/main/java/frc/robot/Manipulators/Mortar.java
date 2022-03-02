@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.RobotMap;
+import frc.robot.Vision.LimeLight;
 
 public class Mortar {
 
@@ -48,21 +49,27 @@ public class Mortar {
         mortarLeft.configPeakOutputReverse(-1);
         
         
-        //mortarRight.config_kF(0, 0.05);
-        //mortarLeft.config_kF(0, 0.05);
-        mortarRight.config_kP(0, 0.0055);
-        mortarLeft.config_kP(0, 0.0055);
-        
+        mortarRight.config_kF(0, 0.048);
+        mortarLeft.config_kF(0, 0.048);
+        mortarRight.config_kP(0, 0.15);
+        mortarLeft.config_kP(0, 0.15);
+    }
 
+    // calculate mortar velocity
+    public double calculateVelocity(double y){
+
+        return ((12213 * Math.pow(y, 3)) + (8850.5 * Math.pow(y, 2)) + (-2341.6 * y) + 5405.5);
     }
 
     // mortar control
     public void run(){
 
-        if (RobotMap.driver.getRawButton(3)){
+        double mortarVelocity = calculateVelocity(LimeLight.getY());
 
-            mortarLeft.set(TalonFXControlMode.Velocity, 10000 * 2048);
-            mortarRight.set(TalonFXControlMode.Velocity, 10000 * 2048);
+        if (RobotMap.operator.getRawButton(8)){
+
+            mortarLeft.set(TalonFXControlMode.Velocity, mortarVelocity);
+            mortarRight.set(TalonFXControlMode.Velocity, mortarVelocity);
         }
         else if (RobotMap.operator.getRawButton(RobotMap.scoreHigh)){
 
@@ -76,16 +83,11 @@ public class Mortar {
             mortarLeft.set(ControlMode.PercentOutput, 0.24);
             mortarRight.set(ControlMode.PercentOutput, 0.24);
         }
-        else if (RobotMap.driver.getRawButton(7)){
-
-            mortarLeft.set(ControlMode.PercentOutput, .75);
-            mortarRight.set(ControlMode.PercentOutput, .75);
-        }
         else{
 
             // idling mortar speed
-            mortarLeft.set(ControlMode.PercentOutput, 0);
-            mortarRight.set(ControlMode.PercentOutput, 0);
+            mortarLeft.set(ControlMode.Velocity, 2000);
+            mortarRight.set(ControlMode.Velocity, 2000);
         }
     }
     

@@ -49,6 +49,13 @@ public class RobotMap {
     public static int zeroGyro = 11;
     public static int cutSpeed = 12;
 
+    public static XboxController driverElite = new XboxController(2);
+    public static int eliteTrackTarget = 1;
+    public static int eliteIntakeLift = 5;
+    public static int eliteIntake = 6;
+    public static int eliteZeroGyro = 9;
+    public static int eliteTrackBall = 2;
+
     public static XboxController operator = new XboxController(1);
     public static int led = 1;
     public static int scoreHigh = 5;
