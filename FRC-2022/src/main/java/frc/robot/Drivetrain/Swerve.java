@@ -47,6 +47,14 @@ public class Swerve {
 
     }
 
+    public void autoInit(){
+
+        backLeft.autoInit(0);
+        backRight.autoInit(0);
+        frontLeft.autoInit(0);
+        frontRight.autoInit(0);
+    }
+
     // drive method
     public void drive(double x, double y, double Twist) {
 
@@ -124,16 +132,34 @@ public class Swerve {
         double twist = 0.0;
         double y = 0.0;
         double x = RobotMap.driverElite.getRawAxis(4);
-        double twistAdjustment = Track.adjustYaw();
+        double twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
+        double twistDeadband = 0.35;
+        double directionDeadband = 0.2;
 
         // deadband
-        /*if (RobotMap.driverElite.getRawAxis(0) < 0.25 || RobotMap.driverElite.getRawAxis(0) > -0.25){
+        if (Math.abs(RobotMap.driverElite.getRawAxis(0)) < twistDeadband){
 
             twist = 0.0;
         } else{
 
-            twist = RobotMap.driverElite.getRawAxis(0);
-        }*/
+            twist = (1 / (1 - twistDeadband)) * (RobotMap.driverElite.getRawAxis(0) + -Math.signum(RobotMap.driverElite.getRawAxis(0)) * twistDeadband); 
+        } 
+
+        if (Math.abs(RobotMap.driverElite.getRawAxis(4)) < directionDeadband){
+
+            x = 0.0;
+        } else{
+
+            x = (1 / (1 - directionDeadband)) * (RobotMap.driverElite.getRawAxis(4) + -Math.signum(RobotMap.driverElite.getRawAxis(4)) * directionDeadband); 
+        } 
+
+        if (Math.abs(RobotMap.driverElite.getRawAxis(5)) < directionDeadband){
+
+            y = 0.0;
+        } else{
+
+            y = (1 / (1 - directionDeadband)) * (RobotMap.driverElite.getRawAxis(5) + -Math.signum(RobotMap.driverElite.getRawAxis(5)) * directionDeadband); 
+        } 
 
         // goal centric assist
         if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget)) {
@@ -157,7 +183,7 @@ public class Swerve {
             twistAdjustment = Pixy.adjustToBall();
         } else{
 
-            twistAdjustment = Track.adjustYaw();
+            twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
         }
 
         // drive inputs

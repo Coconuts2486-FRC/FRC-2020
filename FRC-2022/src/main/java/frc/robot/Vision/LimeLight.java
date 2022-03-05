@@ -20,7 +20,7 @@ public class LimeLight {
 
     public static double getY() {
         // Returns the Y axis of the target
-        SmartDashboard.putNumber("rounded", Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f);
+        //SmartDashboard.putNumber("rounded", Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f);
         return Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f;
        // return table.getEntry("ty").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
     }

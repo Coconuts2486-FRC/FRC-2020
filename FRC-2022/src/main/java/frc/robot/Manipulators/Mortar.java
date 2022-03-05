@@ -62,11 +62,11 @@ public class Mortar {
     }
 
     // mortar control
-    public void run(){
+    public void run( boolean score){
 
         double mortarVelocity = calculateVelocity(LimeLight.getY());
 
-        if (RobotMap.operator.getRawButton(8)){
+        if (score){
 
             mortarLeft.set(TalonFXControlMode.Velocity, mortarVelocity);
             mortarRight.set(TalonFXControlMode.Velocity, mortarVelocity);

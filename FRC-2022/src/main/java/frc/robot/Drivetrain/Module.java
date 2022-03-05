@@ -17,7 +17,7 @@ public class Module {
     private double pi = Math.PI;
 
     // module constructor
-    public Module(int directionMotor, int driveMotor, int encoder){
+    public Module(int directionMotor, int driveMotor, int encoder) {
 
         this.directionMotor = new TalonFX(directionMotor);
         this.driveMotor = new TalonFX(driveMotor);
@@ -28,21 +28,21 @@ public class Module {
     // sets encoders to zero and sets motors to brake
     public void init() {
 
-        encoder.setPosition(0);
+        //encoder.setPosition(0);
         directionMotor.setNeutralMode(NeutralMode.Brake);
         driveMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     // set motors to coast while disabled
-    public void disable(){
-      
+    public void disable() {
+
         directionMotor.setNeutralMode(NeutralMode.Coast);
         driveMotor.setNeutralMode(NeutralMode.Coast);
     }
 
     // calculates fastest path to target angle relative to current angle
     public double nearestAngle(double currentAngle, double targetAngle) {
-      
+
         // get direction
         double direction = (targetAngle % (2 * pi)) - (currentAngle % (2 * pi));
 
@@ -53,15 +53,40 @@ public class Module {
         return direction;
     }
 
-    //module control
-    public void drive(double speed, double angle, double speedModifier){
+    public void autoInit(double angle) {
 
         // make pid continuous on (-pi, pi)
         angleController.enableContinuousInput(-pi, pi);
 
         // get the current position reading of the direction encoder
-        double currentAngle = (encoder.getPosition() / 360) * (pi * 2);
+        double currentAngle = (encoder.getAbsolutePosition() / 360) * (pi * 2);
         double setpoint = 0;
+
+        // find the shortest path to a module setpoint angle
+        double setpointAngle = nearestAngle(currentAngle, angle);
+        double setpointAngleOpposite = nearestAngle(currentAngle, angle + pi);
+
+        if (Math.abs(setpointAngle) <= Math.abs(setpointAngleOpposite)) {
+            setpoint = currentAngle + setpointAngle;
+        } else {
+            setpoint = currentAngle + setpointAngleOpposite;
+        }
+
+        double optimizedAngle = angleController.calculate(currentAngle, setpoint);
+
+        directionMotor.set(ControlMode.PercentOutput, optimizedAngle);
+    }
+
+    // module control
+    public void drive(double speed, double angle, double speedModifier) {
+
+        // make pid continuous on (-pi, pi)
+        angleController.enableContinuousInput(-pi, pi);
+
+        // get the current position reading of the direction encoder
+        double currentAngle = (encoder.getAbsolutePosition() / 360) * (pi * 2);
+        double setpoint = 0;
+        
 
         // find the shortest path to a module setpoint angle
         double setpointAngle = nearestAngle(currentAngle, angle);
@@ -79,5 +104,5 @@ public class Module {
         // set the drive speed and direction of the module
         driveMotor.set(ControlMode.PercentOutput, speed * speedModifier);
         directionMotor.set(ControlMode.PercentOutput, optimizedAngle);
-    } 
+    }
 }

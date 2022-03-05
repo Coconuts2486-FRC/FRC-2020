@@ -23,15 +23,25 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
+  public void robotInit() {
 
-  @Override
-  public void robotPeriodic() {
-    Autonomous.recordAuto();
+    //arduino.set();
   }
 
   @Override
-  public void autonomousInit() {}
+  public void robotPeriodic() {
+   // arduino.run(); 
+  }
+
+  @Override
+  public void autonomousInit() {
+
+    RobotMap.swerve.init();
+    RobotMap.intake.init();
+    RobotMap.mortar.init();
+    //RobotMap.swerve.autoInit();
+    Autonomous.run();
+  }
 
   @Override
   public void autonomousPeriodic() {}
@@ -47,9 +57,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    RobotMap.swerve.run();
-    RobotMap.intake.run();
-    RobotMap.mortar.run();
+    RobotMap.swerve.autoInit();
+    //RobotMap.swerve.run();
+    //RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
+    //RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
+    //Autonomous.recordAuto();
+
     // SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
     // SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());

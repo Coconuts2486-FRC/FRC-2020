@@ -31,14 +31,14 @@ public class Track{
         }
 
         // returns how much the swerve needs to turn to align itself with the goal
-        public static double adjustYaw() {
-                SmartDashboard.putNumber("lastPos", lastpos);
-                double Kp = -0.032;
+        public static double adjustYaw(boolean trackTarget) {
+                //SmartDashboard.putNumber("lastPos", lastpos);
+                double Kp = -0.028;
                 double min_command = 0.05;
                 double tx = LimeLight.getX();
                 double steering_adjust = 0.0;
 
-                if (joystick.getRawButton(RobotMap.eliteTrackTarget) && LimeLight.isTarget()) {
+                if (trackTarget && LimeLight.isTarget()) {
                         double heading_error_X = -tx;
 
                         if (tx > 1.0) {

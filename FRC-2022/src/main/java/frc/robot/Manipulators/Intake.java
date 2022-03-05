@@ -37,8 +37,13 @@ public class Intake {
         lift.set(false);
     }
 
+    public void autoLift(){
+
+        lift.set(true);
+    }
+
     // intake control
-    public void run(){
+    public void run(boolean intake){
 
         RobotMap.mortarVelocity.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
 
@@ -46,7 +51,6 @@ public class Intake {
         if (RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift)){
             if (!pistonactive){
                 lift.set(true);
-                
                 pistonactive = true;
             } else{
  
@@ -57,7 +61,7 @@ public class Intake {
         }
 
         // main intake control
-        if (RobotMap.driverElite.getRawButton(RobotMap.eliteIntake) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) + 100 || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
+        if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else{
@@ -72,7 +76,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) + 100 || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
+        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);

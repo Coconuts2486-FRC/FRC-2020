@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Drivetrain.Module;
 import frc.robot.Drivetrain.Swerve;
@@ -40,6 +41,7 @@ public class RobotMap {
 
     // intake pistion
     public static int lift = 15;
+    
 
     // controllers
     public static Joystick driver = new Joystick(0);
@@ -60,6 +62,7 @@ public class RobotMap {
     public static int led = 1;
     public static int scoreHigh = 5;
     public static int scoreLow = 6;
+    public static int score = 8;
 
     // encoders
     public static int encoderFL = 22;
