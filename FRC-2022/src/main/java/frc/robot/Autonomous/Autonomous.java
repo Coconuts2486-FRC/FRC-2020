@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.Autonomous.autos.goodTwoBallPath;
+import frc.robot.Autonomous.autos.twoBallRefStation;
 import frc.robot.Vision.Track;
 
 public class Autonomous {
@@ -38,7 +38,7 @@ public class Autonomous {
 
     public static void run() {
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;
-        double[][] recorded_input = goodTwoBallPath.positions;
+        double[][] recorded_input = twoBallRefStation.positions;
         int length = recorded_input.length - 1;
 
         RobotMap.intake.autoLift();

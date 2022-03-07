@@ -1,7 +1,7 @@
 
 package frc.robot.Autonomous.autos;
 
-public class goodTwoBallPath {
+public class twoBallRefStation {
 public static double[][] positions = {
 {0.10000000000000142,  0.023622047156095505, -0.0234375, 0.007874015718698502, 0, 0, 0 },
 {0.12001953125000142,  0.023622047156095505, -0.0234375, 0.007874015718698502, 0, 1, 0 },
