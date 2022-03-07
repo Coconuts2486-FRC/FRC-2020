@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.Autonomous.autos.twoBallHanger;
 import frc.robot.Autonomous.autos.twoBallRefStation;
 import frc.robot.Vision.Track;
 
@@ -38,7 +39,7 @@ public class Autonomous {
 
     public static void run() {
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;
-        double[][] recorded_input = twoBallRefStation.positions;
+        double[][] recorded_input = twoBallHanger.positions;
         int length = recorded_input.length - 1;
 
         RobotMap.intake.autoLift();
@@ -48,7 +49,7 @@ public class Autonomous {
             // x - recorded_input[i][1] * 0.5
 
             if ((recorded_input[i][0] * 1000) < currentTimer - autoTimer) {
-                RobotMap.swerve.run(recorded_input[i][1], recorded_input[i][2], recorded_input[i][3], intToBool((int) recorded_input[i][5]));
+                RobotMap.swerve.autoRun(recorded_input[i][1], recorded_input[i][2], recorded_input[i][3], intToBool((int) recorded_input[i][5]));
                 RobotMap.intake.run(intToBool((int) recorded_input[i][4]));
                 RobotMap.mortar.run(intToBool((int) recorded_input[i][6]));
             } else {

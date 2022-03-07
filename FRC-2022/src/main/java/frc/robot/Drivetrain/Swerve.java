@@ -177,4 +177,67 @@ public class Swerve {
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
         realignToField(RobotMap.eliteZeroGyro);
     }
+
+    public void autoRun(double x, double y, double z, boolean track) {
+
+        // drive inputs
+        double twist = 0.0;
+        double twistAdjustment = Track.adjustYaw(track);
+        double twistDeadband = 0.4;
+        double directionDeadband = 0.2;
+
+        // deadband
+        if (Math.abs(z) < twistDeadband){
+
+            twist = 0.0;
+        } else{
+
+            twist = (1 / (1 - twistDeadband)) * (z + -Math.signum(z) * twistDeadband); 
+        } 
+
+        if (Math.abs(x) < directionDeadband){
+
+            x = 0.0;
+        } else{
+
+            x = (1 / (1 - directionDeadband)) * (x + -Math.signum(x) * directionDeadband); 
+        } 
+
+        if (Math.abs(y) < directionDeadband){
+
+            y = 0.0;
+        } else{
+
+            y = (1 / (1 - directionDeadband)) * (y + -Math.signum(y) * directionDeadband); 
+        } 
+
+        // goal centric assist
+        if (track) {
+
+            twist = 0.0;
+        } else {
+            twist = z;
+        }
+
+        // distance assist for firing at 6-7 feet for low and high port
+        /*if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
+
+            y = 0.0;
+        } else {
+            y = y * 1;
+        }
+
+        // pixy centric assist
+        if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
+
+            twistAdjustment = Pixy.adjustToBall();
+        } else{
+
+            twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
+        }*/
+
+        // drive inputs
+        drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
+        realignToField(RobotMap.eliteZeroGyro);
+    }
 }

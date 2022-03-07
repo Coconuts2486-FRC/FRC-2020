@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
      SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
+     SmartDashboard.putNumber("x", RobotMap.driverElite.getRawAxis(4));
+     SmartDashboard.putNumber("y", RobotMap.driverElite.getRawAxis(5));
+     SmartDashboard.putNumber("z", RobotMap.driverElite.getRawAxis(0));
     // SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());
     
   }
