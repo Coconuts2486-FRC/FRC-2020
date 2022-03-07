@@ -22,7 +22,7 @@ public class Module {
         this.directionMotor = new TalonFX(directionMotor);
         this.driveMotor = new TalonFX(driveMotor);
         this.encoder = new CANCoder(encoder);
-        this.angleController = new PIDController(0.4, 0, 0);
+        this.angleController = new PIDController(0.45, 0, 0);
     }
 
     // sets encoders to zero and sets motors to brake
@@ -60,25 +60,25 @@ public class Module {
 
         // get the current position reading of the direction encoder
         double currentAngle = (encoder.getAbsolutePosition() / 360) * (pi * 2);
-        double setpoint = 0;
+        //double setpoint = 0;
 
         // find the shortest path to a module setpoint angle
-        double setpointAngle = nearestAngle(currentAngle, angle);
-        double setpointAngleOpposite = nearestAngle(currentAngle, angle + pi);
+        //double setpointAngle = nearestAngle(currentAngle, angle);
+        //double setpointAngleOpposite = nearestAngle(currentAngle, angle + pi);
 
-        if (Math.abs(setpointAngle) <= Math.abs(setpointAngleOpposite)) {
+        /*if (Math.abs(setpointAngle) <= Math.abs(setpointAngleOpposite)) {
             setpoint = currentAngle + setpointAngle;
         } else {
             setpoint = currentAngle + setpointAngleOpposite;
-        }
+        }*/
 
-        double optimizedAngle = angleController.calculate(currentAngle, setpoint);
+        double optimizedAngle = angleController.calculate(currentAngle, angle);
 
         directionMotor.set(ControlMode.PercentOutput, optimizedAngle);
     }
 
     // module control
-    public void drive(double speed, double angle, double speedModifier) {
+    public void drive(double speed, double angle) {
 
         // make pid continuous on (-pi, pi)
         angleController.enableContinuousInput(-pi, pi);
@@ -102,7 +102,7 @@ public class Module {
         double optimizedAngle = angleController.calculate(currentAngle, setpoint);
 
         // set the drive speed and direction of the module
-        driveMotor.set(ControlMode.PercentOutput, speed * speedModifier);
+        driveMotor.set(ControlMode.PercentOutput, speed);
         directionMotor.set(ControlMode.PercentOutput, optimizedAngle);
     }
 }

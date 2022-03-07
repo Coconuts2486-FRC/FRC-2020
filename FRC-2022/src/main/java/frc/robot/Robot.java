@@ -39,7 +39,6 @@ public class Robot extends TimedRobot {
     RobotMap.swerve.init();
     RobotMap.intake.init();
     RobotMap.mortar.init();
-    //RobotMap.swerve.autoInit();
     Autonomous.run();
   }
 
@@ -57,15 +56,17 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    RobotMap.swerve.autoInit();
-    //RobotMap.swerve.run();
-    //RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
-    //RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
-    //Autonomous.recordAuto();
+    //RobotMap.swerve.autoInit();
+    RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
+    RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
+    RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
+    Autonomous.recordAuto();
 
-    // SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
-    // SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
+     SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
+     SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
+     SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
     // SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());
+    
   }
 
   @Override
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
 
     RobotMap.swerve.disabled();
+    SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
   }
 
   @Override

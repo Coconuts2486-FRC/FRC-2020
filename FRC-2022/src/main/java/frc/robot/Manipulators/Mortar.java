@@ -51,8 +51,8 @@ public class Mortar {
         
         mortarRight.config_kF(0, 0.048);
         mortarLeft.config_kF(0, 0.048);
-        mortarRight.config_kP(0, 0.15);
-        mortarLeft.config_kP(0, 0.15);
+        mortarRight.config_kP(0, 0.3);
+        mortarLeft.config_kP(0, 0.3);
     }
 
     // calculate mortar velocity

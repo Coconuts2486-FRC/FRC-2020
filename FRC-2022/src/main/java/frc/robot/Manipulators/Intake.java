@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
@@ -35,6 +36,7 @@ public class Intake {
         lowerMortarIntake.setNeutralMode(NeutralMode.Brake);
         upperMortarIntake.setNeutralMode(NeutralMode.Brake);
         lift.set(false);
+        RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
     }
 
     public void autoLift(){
@@ -61,7 +63,7 @@ public class Intake {
         }
 
         // main intake control
-        if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
+        if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else{
@@ -76,7 +78,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - 100){
+        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
@@ -84,6 +86,11 @@ public class Intake {
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0);
             upperMortarIntake.set(ControlMode.PercentOutput, 0);
+        }
+
+        // change threshhold
+        if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
+            RobotMap.threshold = 100;
         }
     }
 }   

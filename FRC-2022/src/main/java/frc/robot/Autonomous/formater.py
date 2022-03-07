@@ -1,11 +1,20 @@
-import json
+import json, os
 
 with open("logs/Untitled-1.json", "r") as jfile:
 	data = json.load(jfile)
 
-file = open("data.java", "a")
-run_name = "auto1"
-file.write("\npackage frc.robot.Autonomous;\n\npublic class data {\npublic static double[][] " + run_name + " = {\n")
+highest_number = 0
+list_of_runs = os.listdir("autos")
+for file in list_of_runs:
+	if "data" in file:
+		file = file.replace(".java", "")
+		file = file.replace("data", "")
+		print(file)
+		if int(file) > highest_number:
+			highest_number = int(file)
+
+file = open("autos\data" + str(highest_number + 1) + ".java", "a")
+file.write("\npackage frc.robot.Autonomous.autos;\n\npublic class data" + str(highest_number + 1) + " {\npublic static double[][] positions = {\n")
 
 first_timestamp_taken = False
 first_timestamp = 0

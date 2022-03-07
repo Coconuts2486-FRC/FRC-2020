@@ -9,9 +9,6 @@ import frc.robot.Vision.Track;
 
 public class Swerve {
 
-    // swerve components
-    public static double speedMultiplier = 0.5;
-
     // swerve modules
     private Module backRight;
     private Module backLeft;
@@ -49,10 +46,10 @@ public class Swerve {
 
     public void autoInit(){
 
-        backLeft.autoInit(0);
-        backRight.autoInit(0);
-        frontLeft.autoInit(0);
-        frontRight.autoInit(0);
+        backLeft.autoInit(-(13 * Math.PI / 36));
+        backRight.autoInit(Math.PI / 12);
+        frontLeft.autoInit(41 * Math.PI / 36);
+        frontRight.autoInit(59 * Math.PI / 45);
     }
 
     // drive method
@@ -99,20 +96,12 @@ public class Swerve {
         double backLeftAngle = Math.atan2(a, c);
         double frontRightAngle = Math.atan2(b, d);
         double frontLeftAngle = Math.atan2(b, c);
-
-        if (RobotMap.driver.getRawButton(RobotMap.cutSpeed)) {
-
-            speedMultiplier = 0.3;
-        } else {
-
-            speedMultiplier = 1;
-        }
-
+        
         // set speed and angle each module operates at
-        backRight.drive(backRightSpeed, backRightAngle, speedMultiplier);
-        backLeft.drive(backLeftSpeed, backLeftAngle, speedMultiplier);
-        frontRight.drive(frontRightSpeed, frontRightAngle, speedMultiplier);
-        frontLeft.drive(frontLeftSpeed, frontLeftAngle, speedMultiplier);
+        backRight.drive(backRightSpeed, backRightAngle + (Math.PI / 12));
+        backLeft.drive(backLeftSpeed, backLeftAngle - (13 * Math.PI / 36));
+        frontRight.drive(frontRightSpeed, frontRightAngle + (59 * Math.PI / 45));
+        frontLeft.drive(frontLeftSpeed, frontLeftAngle + (41 * Math.PI / 36));
 
     }
 
@@ -126,55 +115,53 @@ public class Swerve {
     }
 
     // field, goal, and ball centric control
-    public void run() {
+    public void run(double x, double y, double z, boolean track) {
 
         // drive inputs
         double twist = 0.0;
-        double y = 0.0;
-        double x = RobotMap.driverElite.getRawAxis(4);
-        double twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-        double twistDeadband = 0.35;
+        double twistAdjustment = Track.adjustYaw(track);
+        double twistDeadband = 0.4;
         double directionDeadband = 0.2;
 
         // deadband
-        if (Math.abs(RobotMap.driverElite.getRawAxis(0)) < twistDeadband){
+        if (Math.abs(z) < twistDeadband){
 
             twist = 0.0;
         } else{
 
-            twist = (1 / (1 - twistDeadband)) * (RobotMap.driverElite.getRawAxis(0) + -Math.signum(RobotMap.driverElite.getRawAxis(0)) * twistDeadband); 
+            twist = (1 / (1 - twistDeadband)) * (z + -Math.signum(z) * twistDeadband); 
         } 
 
-        if (Math.abs(RobotMap.driverElite.getRawAxis(4)) < directionDeadband){
+        if (Math.abs(x) < directionDeadband){
 
             x = 0.0;
         } else{
 
-            x = (1 / (1 - directionDeadband)) * (RobotMap.driverElite.getRawAxis(4) + -Math.signum(RobotMap.driverElite.getRawAxis(4)) * directionDeadband); 
+            x = (1 / (1 - directionDeadband)) * (x + -Math.signum(x) * directionDeadband); 
         } 
 
-        if (Math.abs(RobotMap.driverElite.getRawAxis(5)) < directionDeadband){
+        if (Math.abs(y) < directionDeadband){
 
             y = 0.0;
         } else{
 
-            y = (1 / (1 - directionDeadband)) * (RobotMap.driverElite.getRawAxis(5) + -Math.signum(RobotMap.driverElite.getRawAxis(5)) * directionDeadband); 
+            y = (1 / (1 - directionDeadband)) * (y + -Math.signum(y) * directionDeadband); 
         } 
 
         // goal centric assist
-        if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget)) {
+        if (track) {
 
             twist = 0.0;
         } else {
-            twist = RobotMap.driverElite.getRawAxis(0);
+            twist = z;
         }
 
         // distance assist for firing at 6-7 feet for low and high port
-        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
+        /*if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
 
             y = 0.0;
         } else {
-            y = RobotMap.driverElite.getRawAxis(5);
+            y = y * 1;
         }
 
         // pixy centric assist
@@ -184,7 +171,7 @@ public class Swerve {
         } else{
 
             twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-        }
+        }*/
 
         // drive inputs
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);

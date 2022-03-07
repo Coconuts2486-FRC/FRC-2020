@@ -44,7 +44,7 @@ public class RobotMap {
     
 
     // controllers
-    public static Joystick driver = new Joystick(0);
+    //public static Joystick driver = new Joystick(0);
     public static int intakeLift = 1;
     public static int trackTarget = 2;
     public static int trackBall = 8;// 3
@@ -55,7 +55,7 @@ public class RobotMap {
     public static int eliteTrackTarget = 1;
     public static int eliteIntakeLift = 5;
     public static int eliteIntake = 6;
-    public static int eliteZeroGyro = 9;
+    public static int eliteZeroGyro = 3;//9
     public static int eliteTrackBall = 2;
 
     public static XboxController operator = new XboxController(1);
@@ -90,6 +90,8 @@ public class RobotMap {
 
     // intake
     public static Intake intake = new Intake(intakeMain, lowerMortarIntake, upperMortarIntake, lift);
+    public static float intakeTimer = 0;
+    public static int threshold = 50;
 
     // mortar
     public static Mortar mortar = new Mortar(mortarLeft, mortarRight);
