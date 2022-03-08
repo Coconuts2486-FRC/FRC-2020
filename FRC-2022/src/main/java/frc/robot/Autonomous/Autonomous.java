@@ -1,6 +1,7 @@
 package frc.robot.Autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -10,6 +11,8 @@ import frc.robot.Autonomous.autos.twoBallRefStation;
 import frc.robot.Vision.Track;
 
 public class Autonomous {
+    public static SendableChooser autoChooser = new SendableChooser<>();
+
     public static int boolToInt(boolean input) {
         if (input) {
             return 1;
@@ -38,9 +41,29 @@ public class Autonomous {
                 + " Auto recording end");
     }
 
+    public static void chooser() {
+        autoChooser.setDefaultOption("four ball", 1);
+        autoChooser.addOption("twoBallHanger", 2);
+        autoChooser.addOption("twoBallRefStation", 3);
+        SmartDashboard.putData("Auto Modes", autoChooser);
+
+    }
+
+    public static int getSelectedAuto() {
+        return (int) autoChooser.getSelected();
+    }
+
     public static void run() {
+
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;
-        double[][] recorded_input = fourBall.positions;
+        double[][] recorded_input = twoBallRefStation.positions;
+
+        if (getSelectedAuto() == 1) {
+            recorded_input = fourBall.positions;
+        } else if (getSelectedAuto() == 2) {
+            recorded_input = twoBallHanger.positions;
+        }
+        
         int length = recorded_input.length - 1;
 
         RobotMap.intake.autoLift();

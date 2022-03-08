@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
@@ -53,6 +54,7 @@ public class Mortar {
         mortarLeft.config_kF(0, 0.048);
         mortarRight.config_kP(0, 0.3);
         mortarLeft.config_kP(0, 0.3);
+
     }
 
     // calculate mortar velocity
