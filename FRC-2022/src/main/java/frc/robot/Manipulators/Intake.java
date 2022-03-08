@@ -11,12 +11,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-<<<<<<< HEAD
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.ColorSensor;
-=======
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
->>>>>>> 84e21a221e57beef25c91fe4b820e89f0325283c
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 

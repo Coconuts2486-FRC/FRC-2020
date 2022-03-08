@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.Autonomous;
+import frc.robot.Manipulators.Intake;
 import frc.robot.Vision.LimeLight;
 import frc.robot.Vision.Track;
 import frc.robot.ColorSensor;
@@ -63,12 +64,8 @@ public class Robot extends TimedRobot {
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
-<<<<<<< HEAD
-    Autonomous.recordAuto();
-    ColorSensor.ejectWrongBalls();
-=======
     // Autonomous.recordAuto();
->>>>>>> 84e21a221e57beef25c91fe4b820e89f0325283c
+    // Intake.outtake("red");
 
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
