@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.Autonomous;
 import frc.robot.Vision.LimeLight;
 import frc.robot.Vision.Track;
+import frc.robot.ColorSensor;
 
 
 /**
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
     Autonomous.recordAuto();
+    ColorSensor.ejectWrongBalls();
 
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));

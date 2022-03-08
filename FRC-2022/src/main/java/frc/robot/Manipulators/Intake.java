@@ -9,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.ColorSensor;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
@@ -91,6 +93,12 @@ public class Intake {
         // change threshhold
         if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
             RobotMap.threshold = 100;
+        }
+    }
+
+    public void outtake(String alliance) {
+        if (ColorSensor.DetectedColor().equals(alliance)) {
+            intakeMain.set(ControlMode.PercentOutput, -0.5);
         }
     }
 }   
