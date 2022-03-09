@@ -62,10 +62,11 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     //RobotMap.swerve.autoInit();
-    // RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
+    RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
-    // RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
+    RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
     // Autonomous.recordAuto();
+    // Intake.outtake("red");
 
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));

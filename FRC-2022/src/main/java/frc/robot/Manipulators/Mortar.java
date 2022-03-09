@@ -85,6 +85,12 @@ public class Mortar {
             mortarLeft.set(ControlMode.PercentOutput, 0.24);
             mortarRight.set(ControlMode.PercentOutput, 0.24);
         }
+        else if (RobotMap.operator.getRawButton(RobotMap.override)){
+
+            // high goal manual scoring speed for 6-7 feet away
+            mortarLeft.set(ControlMode.PercentOutput, 0.31);
+            mortarRight.set(ControlMode.PercentOutput, 0.31);
+        }
         else{
 
             // idling mortar speed

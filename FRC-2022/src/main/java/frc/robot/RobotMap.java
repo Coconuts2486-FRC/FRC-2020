@@ -63,7 +63,9 @@ public class RobotMap {
     public static int led = 1;
     public static int scoreHigh = 5;
     public static int scoreLow = 6;
+    public static int override = 7;
     public static int score = 8;
+    public static int intakeOverride = 9;
 
     // encoders
     public static int encoderFL = 22;
@@ -92,7 +94,7 @@ public class RobotMap {
     // intake
     public static Intake intake = new Intake(intakeMain, lowerMortarIntake, upperMortarIntake, lift);
     public static float intakeTimer = 0;
-    public static int threshold = 50;
+    public static int threshold = 75;
 
     public static boolean outtaking = false;
     public static double outtakingTimer = 0;

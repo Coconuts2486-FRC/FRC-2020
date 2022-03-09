@@ -103,7 +103,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
@@ -115,7 +115,7 @@ public class Intake {
 
         // change threshhold
         if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
-            RobotMap.threshold = 100;
+            RobotMap.threshold = 125;
         }
     }
 }   
