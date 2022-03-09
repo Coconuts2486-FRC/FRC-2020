@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.Autonomous;
 import frc.robot.Manipulators.Intake;
 import frc.robot.Vision.LimeLight;
-import frc.robot.Vision.Track;
-import frc.robot.ColorSensor;
 
 
 /**
@@ -33,7 +31,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
    // arduino.run();
-   SmartDashboard.putString("Detected Color", ColorSensor.DetectedColor());
    Autonomous.chooser();
    Intake.chooser();
   }
@@ -61,21 +58,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    //RobotMap.swerve.autoInit();
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
     // Autonomous.recordAuto();
-    // Intake.outtake("red");
 
+    //add a telemetry class
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
-     SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
-     SmartDashboard.putNumber("x", RobotMap.driverElite.getRawAxis(4));
-     SmartDashboard.putNumber("y", RobotMap.driverElite.getRawAxis(5));
-     SmartDashboard.putNumber("z", RobotMap.driverElite.getRawAxis(0));
-    // SmartDashboard.putNumber("adjustPosition", Track.adjustPosition());
-    
   }
 
   @Override
@@ -85,7 +75,6 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
 
     RobotMap.swerve.disabled();
-    SmartDashboard.putNumber("limelight.getY", LimeLight.getY());
   }
 
   @Override

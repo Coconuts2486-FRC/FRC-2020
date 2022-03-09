@@ -1,8 +1,5 @@
 package frc.robot.Drivetrain;
 
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.RobotMap;
 import frc.robot.Vision.Pixy;
 import frc.robot.Vision.Track;
@@ -44,6 +41,7 @@ public class Swerve {
 
     }
 
+    // testing method for absolute encoder offsets
     public void autoInit(){
 
         backLeft.autoInit(-(13 * Math.PI / 36));
@@ -157,7 +155,7 @@ public class Swerve {
         }
 
         // distance assist for firing at 6-7 feet for low and high port
-        /*if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
+        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
 
             y = 0.0;
         } else {
@@ -171,13 +169,14 @@ public class Swerve {
         } else{
 
             twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-        }*/
+        }
 
         // drive inputs
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
         realignToField(RobotMap.eliteZeroGyro);
     }
 
+    // same run function but used in auto to reduce conflict
     public void autoRun(double x, double y, double z, boolean track) {
 
         // drive inputs
@@ -219,14 +218,6 @@ public class Swerve {
             twist = z;
         }
 
-        // distance assist for firing at 6-7 feet for low and high port
-        /*if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
-
-            y = 0.0;
-        } else {
-            y = y * 1;
-        }
-
         // pixy centric assist
         if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
 
@@ -234,7 +225,7 @@ public class Swerve {
         } else{
 
             twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-        }*/
+        }
 
         // drive inputs
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);

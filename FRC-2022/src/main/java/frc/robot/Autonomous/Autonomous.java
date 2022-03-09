@@ -3,16 +3,15 @@ package frc.robot.Autonomous;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.Autonomous.autos.fourBall;
 import frc.robot.Autonomous.autos.twoBallHanger;
 import frc.robot.Autonomous.autos.twoBallRefStation;
-import frc.robot.Vision.Track;
 
 public class Autonomous {
     public static SendableChooser autoChooser = new SendableChooser<>();
 
+    // converts boolean input to int output for the purpose of recording button inputs for auto
     public static int boolToInt(boolean input) {
         if (input) {
             return 1;
@@ -21,6 +20,7 @@ public class Autonomous {
         }
     }
 
+    // converts int input to boolean output for the purpose of recording button inputs for auto
     public static boolean intToBool(int input) {
         if (input == 1) {
             return true;
@@ -28,6 +28,8 @@ public class Autonomous {
             return false;
         }
     }
+
+    // records controller inputs from a manually driven path to be used for auto
     public static void recordAuto() {
         System.out.println("Auto recording start: " 
                 + RobotMap.driverElite.getRawAxis(4) //x axis
@@ -41,6 +43,7 @@ public class Autonomous {
                 + " Auto recording end");
     }
 
+    // allows us to select our auto path
     public static void chooser() {
         autoChooser.setDefaultOption("four ball", 1);
         autoChooser.addOption("twoBallHanger", 2);
@@ -53,6 +56,7 @@ public class Autonomous {
         return (int) autoChooser.getSelected();
     }
 
+    // runs the selected auto path
     public static void run() {
 
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;

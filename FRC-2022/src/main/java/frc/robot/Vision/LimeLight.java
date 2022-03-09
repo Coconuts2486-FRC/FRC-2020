@@ -1,7 +1,6 @@
 package frc.robot.Vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -12,20 +11,20 @@ public class LimeLight {
     public static boolean led = false;
 
     public static double getX() {
+
         // Returns the X axis of the target
         double x = table.getEntry("tx").getDouble(0.0);
         return x;
- //       return table.getEntry("tx").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
     }
 
     public static double getY() {
+
         // Returns the Y axis of the target
-        //SmartDashboard.putNumber("rounded", Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f);
-        return Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f;
-       // return table.getEntry("ty").getDouble(0.0) / 27; // translated degrees -27 to 27 to a value between -1 and 1
+        return Math.round((table.getEntry("ty").getDouble(0.0) / 27f)*100f)/100f; // translated degrees -27 to 27 to a value between -1 and 1
     }
 
     public static boolean isTarget() {
+        
         // Returns true if there is a target in frame
         int tv = (int) table.getEntry("tv").getDouble(0.0);
         if (tv == 1) {

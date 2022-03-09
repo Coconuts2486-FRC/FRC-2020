@@ -1,5 +1,7 @@
 import json, os
 
+# script that retrieves data for our auto paths 
+
 with open("logs/Untitled-1.json", "r") as jfile:
 	data = json.load(jfile)
 

@@ -1,12 +1,9 @@
 package frc.robot.Manipulators;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 

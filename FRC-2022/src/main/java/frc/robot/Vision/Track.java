@@ -1,8 +1,6 @@
 package frc.robot.Vision;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -32,7 +30,6 @@ public class Track{
 
         // returns how much the swerve needs to turn to align itself with the goal
         public static double adjustYaw(boolean trackTarget) {
-                //SmartDashboard.putNumber("lastPos", lastpos);
                 double Kp = -0.028;
                 double min_command = 0.05;
                 double tx = LimeLight.getX();

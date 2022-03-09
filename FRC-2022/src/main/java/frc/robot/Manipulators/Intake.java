@@ -5,16 +5,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.ColorSensor;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
@@ -47,12 +42,15 @@ public class Intake {
         RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
     }
 
+    // set piston down in auto
     public void autoLift(){
 
         lift.set(true);
     }
 
+    // allows us to select our alliance so that the intake rejects the opposing alliance balls
     public static void chooser() {
+
         // returns the opposite alliance because that's the ball we want to spit out
         allianceChooser.setDefaultOption("Red", "Blue");
         allianceChooser.addOption("Blue", "Red");
@@ -78,7 +76,7 @@ public class Intake {
 
         }
 
-        // main intake control
+        // main intake control; rejects opposing alliance balls
         if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
             lift.set(false);
             intakeMain.set(ControlMode.PercentOutput, -0.9);

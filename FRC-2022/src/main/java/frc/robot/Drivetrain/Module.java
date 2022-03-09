@@ -53,6 +53,7 @@ public class Module {
         return direction;
     }
 
+    // testing method for absolute encoder offsets
     public void autoInit(double angle) {
 
         // make pid continuous on (-pi, pi)
@@ -60,17 +61,6 @@ public class Module {
 
         // get the current position reading of the direction encoder
         double currentAngle = (encoder.getAbsolutePosition() / 360) * (pi * 2);
-        //double setpoint = 0;
-
-        // find the shortest path to a module setpoint angle
-        //double setpointAngle = nearestAngle(currentAngle, angle);
-        //double setpointAngleOpposite = nearestAngle(currentAngle, angle + pi);
-
-        /*if (Math.abs(setpointAngle) <= Math.abs(setpointAngleOpposite)) {
-            setpoint = currentAngle + setpointAngle;
-        } else {
-            setpoint = currentAngle + setpointAngleOpposite;
-        }*/
 
         double optimizedAngle = angleController.calculate(currentAngle, angle);
 

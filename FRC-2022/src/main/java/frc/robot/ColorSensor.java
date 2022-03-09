@@ -1,12 +1,8 @@
 package frc.robot;
 
 import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.Manipulators.Intake;
-
 
 public class ColorSensor {
     public static I2C.Port i2cPort = I2C.Port.kOnboard;
