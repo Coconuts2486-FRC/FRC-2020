@@ -95,7 +95,7 @@ public class Intake {
 
         // change threshhold
         if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
-            RobotMap.threshold = 100;
+            RobotMap.threshold = 125;
         }
     }
 
