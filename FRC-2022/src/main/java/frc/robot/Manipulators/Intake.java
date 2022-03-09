@@ -68,7 +68,7 @@ public class Intake {
         }
 
         // main intake control
-        if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        if (intake || RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else{
@@ -83,7 +83,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
