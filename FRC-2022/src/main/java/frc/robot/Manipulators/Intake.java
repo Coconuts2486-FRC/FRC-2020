@@ -6,21 +6,21 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.hal.simulation.DriverStationDataJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
-<<<<<<< HEAD
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.SendableCameraWrapper;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.ColorSensor;
-=======
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
->>>>>>> 84e21a221e57beef25c91fe4b820e89f0325283c
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
 public class Intake {
+    public static SendableChooser allianceChooser = new SendableChooser<>();
 
     // intake components
     private TalonFX intakeMain;
@@ -52,6 +52,14 @@ public class Intake {
         lift.set(true);
     }
 
+    public static void chooser() {
+        // returns the opposite alliance because that's the ball we want to spit out
+        allianceChooser.setDefaultOption("Red", "Blue");
+        allianceChooser.addOption("Blue", "Red");
+        SmartDashboard.putData("Alliance", allianceChooser);
+
+    }
+
     // intake control
     public void run(boolean intake){
 
@@ -71,12 +79,21 @@ public class Intake {
         }
 
         // main intake control
-        if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
+            lift.set(false);
+            intakeMain.set(ControlMode.PercentOutput, -0.9);
+        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
-        } else{
-
+        } else {
             intakeMain.set(ControlMode.PercentOutput, 0);
+            RobotMap.outtaking = false;
+        }
+
+        if (ColorSensor.DetectedColor().equals(allianceChooser.getSelected()) && !RobotMap.outtaking) {
+
+            RobotMap.outtaking = true;
+            RobotMap.outtakingTimer = Timer.getFPGATimestamp();
         }
 
         // outtake
@@ -99,12 +116,6 @@ public class Intake {
         // change threshhold
         if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
             RobotMap.threshold = 100;
-        }
-    }
-
-    public void outtake(String alliance) {
-        if (ColorSensor.DetectedColor().equals(alliance)) {
-            intakeMain.set(ControlMode.PercentOutput, -0.5);
         }
     }
 }   

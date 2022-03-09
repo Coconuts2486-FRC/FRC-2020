@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Drivetrain.Module;
 import frc.robot.Drivetrain.Swerve;
 import frc.robot.Manipulators.Intake;
@@ -92,6 +93,9 @@ public class RobotMap {
     public static Intake intake = new Intake(intakeMain, lowerMortarIntake, upperMortarIntake, lift);
     public static float intakeTimer = 0;
     public static int threshold = 50;
+
+    public static boolean outtaking = false;
+    public static double outtakingTimer = 0;
 
     // mortar
     public static Mortar mortar = new Mortar(mortarLeft, mortarRight);

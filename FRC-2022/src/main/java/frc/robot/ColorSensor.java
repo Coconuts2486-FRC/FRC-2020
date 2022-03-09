@@ -1,6 +1,9 @@
 package frc.robot;
 
+import com.revrobotics.ColorSensorV3;
+
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Manipulators.Intake;
 
@@ -16,13 +19,13 @@ public class ColorSensor {
         double blue = color.blue;
         String DetectedColor = "None";
 
-        if (red <= 0.58 && red >= 0.47 && 
-            green <= 0.39 && green >= 0.31 && 
-            blue <= 0.16 && blue >= 0.09) {
+        if (red <= 0.57 && red >= 0.33 && 
+            green <= 0.46 && green >= 0.31 && 
+            blue <= 0.22 && blue >= 0.09) {
                 DetectedColor = "Red";
-        } else if (red <= 0.21 && red >= 0.12 &&
-                    green <= 0.42 && green >= 0.34 &&
-                    blue <= 0.5 && blue >= 0.39){
+        } else if (red <= 0.24 && red >= 0.11 &&
+                    green <= 0.48 && green >= 0.36 &&
+                    blue <= 0.50 && blue >= 0.29){
                 DetectedColor = "Blue";
         } else {
                 DetectedColor = "None";
