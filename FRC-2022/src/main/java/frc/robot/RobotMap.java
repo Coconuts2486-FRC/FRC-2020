@@ -6,11 +6,13 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Drivetrain.Module;
 import frc.robot.Drivetrain.Swerve;
+import frc.robot.Manipulators.Climber;
 import frc.robot.Manipulators.Intake;
 import frc.robot.Manipulators.Mortar;
 
@@ -43,6 +45,9 @@ public class RobotMap {
 
     // intake pistion
     public static int lift = 15;
+
+    // climb piston
+    public static int climblock = 7;
     
 
     // controllers
@@ -60,17 +65,22 @@ public class RobotMap {
     public static int eliteTrackTarget = 1;
     public static int eliteIntakeLift = 5;
     public static int eliteIntake = 6;
-    public static int eliteZeroGyro = 3;//9
+    public static int eliteZeroGyro = 9;
     public static int eliteTrackBall = 2;
 
     // logitech (co-driver)
     public static XboxController operator = new XboxController(1);
-    public static int led = 1;
+    public static int led = 50;
     public static int scoreHigh = 5;
     public static int scoreLow = 6;
     public static int override = 7;
     public static int score = 8;
-    public static int intakeOverride = 9;
+    public static int intakeOverride = 1;
+    public static int ascend = 12;
+    public static int descend = 11;
+    public static int increaseMortarVelocity = 2;
+    public static int decreaseMortarVelocity = 3;
+    public static int climbPiston = 4;
 
     // encoders
 
@@ -82,6 +92,9 @@ public class RobotMap {
 
     // mortar encoder
     public static TalonFX mortarVelocity = new TalonFX(40);
+
+    // climb motor
+    public static int climbMotor = 30;
 
     // gyro
     public static TalonSRX gyroTalon = new TalonSRX(0);
@@ -111,7 +124,9 @@ public class RobotMap {
     // mortar
     public static Mortar mortar = new Mortar(mortarLeft, mortarRight);
 
+    // climb
+    public static Climber climb = new Climber(climbMotor, climblock);
+
     // Pnuematics
     public static Compressor compressor = new Compressor(1, PneumaticsModuleType.REVPH);
-
 }

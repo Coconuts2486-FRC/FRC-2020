@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.Autonomous;
 import frc.robot.Manipulators.Intake;
 import frc.robot.Vision.LimeLight;
+import frc.robot.Vision.Track;
 
 
 /**
@@ -61,11 +63,14 @@ public class Robot extends TimedRobot {
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
+    RobotMap.climb.run();
     // Autonomous.recordAuto();
 
     //add a telemetry class
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
+     SmartDashboard.putNumber("Limelight.getX", LimeLight.getX());
+     
   }
 
   @Override
@@ -81,5 +86,7 @@ public class Robot extends TimedRobot {
   public void testInit() {}
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    LimeLight.ledControl(10);
+  }
 }

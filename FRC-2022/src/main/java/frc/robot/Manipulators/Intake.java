@@ -24,6 +24,7 @@ public class Intake {
     private Solenoid lift;
     private static boolean pistonactive = false;
 
+
     // intake constructor
     public Intake(int intakeMain, int lowarMortarIntake, int upperMortarIntake, int lift){
 
@@ -80,7 +81,7 @@ public class Intake {
         if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
             lift.set(false);
             intakeMain.set(ControlMode.PercentOutput, -0.9);
-        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > (RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold)){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else {
@@ -101,7 +102,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold){
+        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold)) && RobotMap.operator.getRawButton(RobotMap.override) == false){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);

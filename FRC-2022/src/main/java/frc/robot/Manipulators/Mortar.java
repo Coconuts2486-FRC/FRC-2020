@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
@@ -12,6 +14,8 @@ public class Mortar {
     // mortar components
     private TalonFX mortarLeft;
     private TalonFX mortarRight;
+    public double tune = 0.0;
+    
     
 
     // mortar constructor
@@ -57,13 +61,24 @@ public class Mortar {
     // calculate mortar velocity
     public double calculateVelocity(double y){
 
-        return ((12213 * Math.pow(y, 3)) + (8850.5 * Math.pow(y, 2)) + (-2341.6 * y) + 5405.5);
+        return ((12213 * Math.pow(y, 3)) + (8850.5 * Math.pow(y, 2)) + (-2341.6 * y) + 5530.5);
     }
 
     // mortar control
-    public void run( boolean score){
+    public void run(boolean score){
 
-        double mortarVelocity = calculateVelocity(LimeLight.getY());
+        SmartDashboard.putNumber("TUner", tune);
+        if (RobotMap.operator.getRawButtonPressed(RobotMap.increaseMortarVelocity)){
+
+            tune += 25;
+        } 
+
+        if (RobotMap.operator.getRawButtonPressed(RobotMap.decreaseMortarVelocity)){
+
+            tune -= 25;
+        } 
+
+        double mortarVelocity = calculateVelocity(LimeLight.getY()) + tune;
 
         if (score){
 

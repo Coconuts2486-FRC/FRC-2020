@@ -1,5 +1,6 @@
 package frc.robot.Drivetrain;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.Vision.Pixy;
 import frc.robot.Vision.Track;
@@ -162,14 +163,17 @@ public class Swerve {
             y = y * 1;
         }
 
+        SmartDashboard.putNumber("Limelight.getX", Track.adjustYaw(track));
+
+
         // pixy centric assist
-        if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
+        /*if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
 
             twistAdjustment = Pixy.adjustToBall();
         } else{
 
             twistAdjustment = Track.adjustYaw(RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-        }
+        }*/
 
         // drive inputs
         drive(x, y + Track.adjustPosition(), twist + twistAdjustment);
@@ -181,9 +185,16 @@ public class Swerve {
 
         // drive inputs
         double twist = 0.0;
-        double twistAdjustment = Track.adjustYaw(track);
         double twistDeadband = 0.4;
         double directionDeadband = 0.2;
+        double kP = 0.28; 
+        double[] ypr_deg = new double[3];
+
+        RobotMap.gyro.getYawPitchRoll(ypr_deg);
+        double robotAngle = ypr_deg[0] * Math.PI / 180;
+        double errorAngle = (0 - robotAngle) % (Math.PI * 2);
+        double correction = errorAngle * kP;
+        double twistAdjustment = correction;
 
         // deadband
         if (Math.abs(z) < twistDeadband){
@@ -209,6 +220,8 @@ public class Swerve {
 
             y = (1 / (1 - directionDeadband)) * (y + -Math.signum(y) * directionDeadband); 
         } 
+
+        
 
         // goal centric assist
         if (track) {
