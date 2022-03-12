@@ -77,7 +77,7 @@ public class Autonomous {
             // x - recorded_input[i][1] * 0.5
 
             if ((recorded_input[i][0] * 1000) < currentTimer - autoTimer) {
-                RobotMap.swerve.autoRun(recorded_input[i][1], recorded_input[i][2], recorded_input[i][2], intToBool((int) recorded_input[i][5]));
+                RobotMap.swerve.autoRun(recorded_input[i][1], recorded_input[i][2], recorded_input[i][3], intToBool((int) recorded_input[i][5]));
                 RobotMap.intake.run(intToBool((int) recorded_input[i][4]));
                 RobotMap.mortar.run(intToBool((int) recorded_input[i][6]));
             } else {

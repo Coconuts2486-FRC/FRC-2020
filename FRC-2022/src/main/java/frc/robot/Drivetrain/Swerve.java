@@ -185,16 +185,9 @@ public class Swerve {
 
         // drive inputs
         double twist = 0.0;
+        double twistAdjustment = Track.adjustYaw(track);
         double twistDeadband = 0.4;
         double directionDeadband = 0.2;
-        double kP = 0.28; 
-        double[] ypr_deg = new double[3];
-
-        RobotMap.gyro.getYawPitchRoll(ypr_deg);
-        double robotAngle = ypr_deg[0] * Math.PI / 180;
-        double errorAngle = (0 - robotAngle) % (Math.PI * 2);
-        double correction = errorAngle * kP;
-        double twistAdjustment = correction;
 
         // deadband
         if (Math.abs(z) < twistDeadband){
