@@ -67,10 +67,11 @@ public class RobotMap {
     public static int eliteIntake = 6;
     public static int eliteZeroGyro = 9;
     public static int eliteTrackBall = 2;
+    public static int switchCamera = 8;
 
     // logitech (co-driver)
     public static XboxController operator = new XboxController(1);
-    public static int led = 50;
+    public static int led = 10;
     public static int scoreHigh = 5;
     public static int scoreLow = 6;
     public static int override = 7;

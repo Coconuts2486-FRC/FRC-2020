@@ -31,6 +31,7 @@ public class Module {
         //encoder.setPosition(0);
         directionMotor.setNeutralMode(NeutralMode.Brake);
         driveMotor.setNeutralMode(NeutralMode.Brake);
+        driveMotor.configOpenloopRamp(1);
     }
 
     // set motors to coast while disabled

@@ -74,14 +74,13 @@ public class Intake {
                 lift.set(false);
                 pistonactive = false;
             }
-
         }
 
         // main intake control; rejects opposing alliance balls
         if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
             lift.set(false);
             intakeMain.set(ControlMode.PercentOutput, -0.9);
-        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > (RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold)){
+        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > (RobotMap.mortar.calculateVelocity(LimeLight.getY() + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else {
@@ -102,7 +101,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) - RobotMap.threshold)) && RobotMap.operator.getRawButton(RobotMap.override) == false){
+        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY() + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)) && RobotMap.operator.getRawButton(RobotMap.override) == false){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
@@ -113,8 +112,8 @@ public class Intake {
         }
 
         // change threshhold
-        if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
+        /*if (RobotMap.intakeTimer - Timer.getFPGATimestamp() > 90) {
             RobotMap.threshold = 125;
-        }
+        }*/
     }
 }   

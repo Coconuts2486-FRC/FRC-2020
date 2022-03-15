@@ -9,6 +9,7 @@ import frc.robot.RobotMap;
 public class LimeLight {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     public static boolean led = false;
+    public static boolean cameraSwitched = false;
 
     public static double getX() {
 
@@ -39,16 +40,22 @@ public class LimeLight {
         return a1;
     }
 
-    // turns LEDs on
+    // turns leds on
     public static void ledOn(){
 
-        table.getEntry("ledmode").setNumber(3);
+        table.getEntry("ledMode").setNumber(3);
     }
 
-    // turns LEDs off
+    // turns leds off
     public static void ledOff(){
 
-        table.getEntry("ledmode").setNumber(1);
+        table.getEntry("ledMode").setNumber(1);
+    }
+
+    // initializes camera mode for limelight
+    public static void initCamera(){
+
+        table.getEntry("camMode").setNumber(0);
     }
 
     // controls state of LEDs
@@ -57,13 +64,31 @@ public class LimeLight {
         if (RobotMap.operator.getRawButtonPressed(button)){
             if (!led){
 
-                LimeLight.ledOn();
+                ledOff();
                 led = true;
             }
             else{
 
-                LimeLight.ledOff();
+                ledOn();
                 led = false;
+            }
+
+        }
+    }
+
+    // controls camera mode of limelight
+    public static void cameraMode(int button){
+
+        if (RobotMap.driverElite.getRawButtonPressed(button)){
+            if (!cameraSwitched){
+
+                table.getEntry("camMode").setNumber(1);
+                cameraSwitched = true;
+            }
+            else{
+
+                table.getEntry("camMode").setNumber(0);
+                cameraSwitched = false;
             }
 
         }

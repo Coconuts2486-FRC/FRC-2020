@@ -28,6 +28,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     //arduino.set();
+    LimeLight.ledOff();
+    LimeLight.initCamera();
   }
 
   @Override
@@ -35,11 +37,13 @@ public class Robot extends TimedRobot {
    // arduino.run();
    Autonomous.chooser();
    Intake.chooser();
+   LimeLight.ledControl(RobotMap.led);
   }
 
   @Override
   public void autonomousInit() {
 
+    LimeLight.ledOn();
     RobotMap.swerve.init();
     RobotMap.intake.init();
     RobotMap.mortar.init();
@@ -60,6 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
+    LimeLight.cameraMode(RobotMap.switchCamera);
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
@@ -69,8 +74,7 @@ public class Robot extends TimedRobot {
     //add a telemetry class
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortarVelocity.getSelectedSensorVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
-     SmartDashboard.putNumber("Limelight.getX", LimeLight.getX());
-     
+     SmartDashboard.putNumber("Calculated adjusted velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity());
   }
 
   @Override
@@ -86,7 +90,5 @@ public class Robot extends TimedRobot {
   public void testInit() {}
 
   @Override
-  public void testPeriodic() {
-    LimeLight.ledControl(10);
-  }
+  public void testPeriodic() {}
 }

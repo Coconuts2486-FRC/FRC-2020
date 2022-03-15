@@ -163,9 +163,6 @@ public class Swerve {
             y = y * 1;
         }
 
-        SmartDashboard.putNumber("Limelight.getX", Track.adjustYaw(track));
-
-
         // pixy centric assist
         /*if (RobotMap.driverElite.getRawButton(RobotMap.eliteTrackBall) && Pixy.seesBall()){
 
