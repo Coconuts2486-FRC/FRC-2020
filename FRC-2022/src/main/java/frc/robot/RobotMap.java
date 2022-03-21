@@ -3,13 +3,19 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.Drivetrain.Module;
 import frc.robot.Drivetrain.Swerve;
 import frc.robot.Manipulators.Climber;
@@ -30,7 +36,7 @@ public class RobotMap {
 
     // drive falcons
     public static int driveBL = 7;
-    public static int driveBR = 1;
+    public static int driveBR = 9;
     public static int driveFL = 5;
     public static int driveFR = 3;
 
@@ -40,7 +46,7 @@ public class RobotMap {
 
     // intake motors
     public static int intakeMain = 10;
-    public static int lowerMortarIntake = 0;
+    public static int lowerMortarIntake = 12;
     public static int upperMortarIntake = 11;
 
     // intake pistion
@@ -91,14 +97,11 @@ public class RobotMap {
     public static int encoderFR = 21;
     public static int encoderBL = 23;
 
-    // mortar encoder
-    public static TalonFX mortarVelocity = new TalonFX(40);
-
     // climb motor
     public static int climbMotor = 30;
 
     // gyro
-    public static TalonSRX gyroTalon = new TalonSRX(0);
+    public static TalonSRX gyroTalon = new TalonSRX(12);
     public static PigeonIMU gyro = new PigeonIMU(gyroTalon);
 
     // pixy
@@ -130,4 +133,7 @@ public class RobotMap {
 
     // Pnuematics
     public static Compressor compressor = new Compressor(1, PneumaticsModuleType.REVPH);
+
+    // pdp
+    PowerDistribution pdp = new PowerDistribution(16, ModuleType.kRev);
 }

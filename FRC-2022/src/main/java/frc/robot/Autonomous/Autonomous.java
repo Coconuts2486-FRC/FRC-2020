@@ -4,9 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.Autonomous.autos.fourBall;
-import frc.robot.Autonomous.autos.twoBallHanger;
-import frc.robot.Autonomous.autos.twoBallRefStation;
+import frc.robot.Autonomous.autos.twoBall;
 
 public class Autonomous {
     public static SendableChooser autoChooser = new SendableChooser<>();
@@ -45,9 +43,7 @@ public class Autonomous {
 
     // allows us to select our auto path
     public static void chooser() {
-        autoChooser.setDefaultOption("four ball", 1);
-        autoChooser.addOption("twoBallHanger", 2);
-        autoChooser.addOption("twoBallRefStation", 3);
+        autoChooser.setDefaultOption("Two Ball", 1);
         SmartDashboard.putData("Auto Modes", autoChooser);
 
     }
@@ -60,12 +56,10 @@ public class Autonomous {
     public static void run() {
 
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;
-        double[][] recorded_input = twoBallRefStation.positions;
+        double[][] recorded_input = twoBall.positions;
 
         if (getSelectedAuto() == 1) {
-            recorded_input = fourBall.positions;
-        } else if (getSelectedAuto() == 2) {
-            recorded_input = twoBallHanger.positions;
+            recorded_input = twoBall.positions;
         }
         
         int length = recorded_input.length - 1;

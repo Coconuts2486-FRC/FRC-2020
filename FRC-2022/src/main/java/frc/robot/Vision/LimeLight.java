@@ -1,6 +1,10 @@
 package frc.robot.Vision;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.RobotMap;
 
 /**
@@ -35,9 +39,17 @@ public class LimeLight {
         }
     }
     public static double Calibrate(double h1,double h2,double distance){
-        double a1 = Math.atan(((h2-h1)/distance))- LimeLight.getY();
+        double a1 = Math.atan(((h2-h1)/distance)) - LimeLight.getY();
 
         return a1;
+    }
+
+    public static void stream(){
+
+        ShuffleboardTab Driver = Shuffleboard.getTab("driver");
+
+        HttpCamera limelight = new HttpCamera("limelight", "http://10.24.86.11:5800");
+        Driver.add("Limelight", limelight).withWidget(BuiltInWidgets.kCameraStream).withPosition(2, 0).withSize(5, 3);
     }
 
     // turns leds on
@@ -55,6 +67,7 @@ public class LimeLight {
     // initializes camera mode for limelight
     public static void initCamera(){
 
+        table.getEntry("stream").setNumber(0);
         table.getEntry("camMode").setNumber(0);
     }
 
@@ -72,7 +85,6 @@ public class LimeLight {
                 ledOn();
                 led = false;
             }
-
         }
     }
 

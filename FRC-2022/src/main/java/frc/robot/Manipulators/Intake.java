@@ -2,9 +2,10 @@ package frc.robot.Manipulators;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -39,6 +40,9 @@ public class Intake {
         intakeMain.setNeutralMode(NeutralMode.Brake);
         lowerMortarIntake.setNeutralMode(NeutralMode.Brake);
         upperMortarIntake.setNeutralMode(NeutralMode.Brake);
+        intakeMain.configOpenloopRamp(0);
+        lowerMortarIntake.configOpenloopRamp(0.25);
+        upperMortarIntake.configOpenloopRamp(0.25);
         lift.set(false);
         RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
     }
@@ -62,8 +66,6 @@ public class Intake {
     // intake control
     public void run(boolean intake){
 
-        RobotMap.mortarVelocity.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-
         // intake arm control
         if (RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift)){
             if (!pistonactive){
@@ -80,7 +82,7 @@ public class Intake {
         if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
             lift.set(false);
             intakeMain.set(ControlMode.PercentOutput, -0.9);
-        } else if (intake || RobotMap.mortarVelocity.getSelectedSensorVelocity() > (RobotMap.mortar.calculateVelocity(LimeLight.getY() + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)){
+        } else if (intake || RobotMap.mortar.getVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)){
 
             intakeMain.set(ControlMode.PercentOutput, 0.5);
         } else {
@@ -101,7 +103,7 @@ public class Intake {
         }
 
         // secondary intake control
-        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortarVelocity.getSelectedSensorVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY() + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)) && RobotMap.operator.getRawButton(RobotMap.override) == false){
+        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortar.getVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold) && RobotMap.operator.getRawButton(RobotMap.override) == false){
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
             upperMortarIntake.set(ControlMode.PercentOutput, 0.5);

@@ -25,12 +25,12 @@ public class Climber {
 
         climbMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
         climbMotor.setNeutralMode(NeutralMode.Brake);
-        climbLock.set(true);
+        climbLock.set(false);
     }
     
     public void disabled(){
 
-        climbLock.set(false);
+        climbLock.set(true);
     }
 
     public void run(){
