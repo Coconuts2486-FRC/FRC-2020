@@ -14,17 +14,20 @@ public class Climber {
     private TalonFX climbMotor;
     private Solenoid climbLock;
     public static boolean climbactive = false;
+    private double climbSpeed = 0;
+    private double output = 0;
 
     public Climber(int climbMotor, int climbLock){
 
         this.climbMotor = new TalonFX(climbMotor);
-        this.climbLock = new Solenoid(1, PneumaticsModuleType.REVPH, climbLock);
+        this.climbLock = new Solenoid(PneumaticsModuleType.CTREPCM, climbLock);
     }
 
     public void init(){
 
         climbMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
         climbMotor.setNeutralMode(NeutralMode.Brake);
+        climbMotor.setSelectedSensorPosition(0);
         climbLock.set(false);
     }
     
@@ -35,18 +38,41 @@ public class Climber {
 
     public void run(){
 
-        double encoderStop = climbMotor.getSelectedSensorPosition();
+        double climbPosition = climbMotor.getSelectedSensorPosition();
+        double setpoint = 157843;
+        double kP = 0.0001;
+        double maxHeight = 220000;
 
-        if (RobotMap.operator.getRawButton(RobotMap.ascend)){
+        double error = setpoint - climbPosition;
 
-            climbMotor.set(TalonFXControlMode.PercentOutput, 1);
+        if (RobotMap.operator.getRawButton(RobotMap.toMid)){
+
+            output = kP * error;
         }
-        else if (RobotMap.operator.getRawButton(RobotMap.descend)){
-            climbMotor.set(TalonFXControlMode.PercentOutput, -1);
+
+        else if (climbPosition > maxHeight && RobotMap.operator.getRawAxis(1) < -0.2 || climbPosition > maxHeight && RobotMap.operator.getRawAxis(3) < -0.1){
+
+            output = 0;
         }
+
+        else if (Math.abs(RobotMap.operator.getRawAxis(1)) > 0.2){
+
+            climbSpeed = -0.5;
+            output = climbSpeed * RobotMap.operator.getRawAxis(1);
+        }
+
+        else if (Math.abs(RobotMap.operator.getRawAxis(3)) > 0.1){
+
+            climbSpeed = -1;
+            output = climbSpeed * RobotMap.operator.getRawAxis(3);
+        }
+
         else{
-            climbMotor.set(TalonFXControlMode.PercentOutput, 0);
+
+            output = 0;
         }
+
+        climbMotor.set(TalonFXControlMode.PercentOutput, output);
 
         if (RobotMap.operator.getRawButtonPressed(RobotMap.climbPiston)){
             if (!climbactive){
@@ -58,7 +84,6 @@ public class Climber {
                 climbLock.set(false);
                 climbactive = false;
             }
-
         }
     }
     

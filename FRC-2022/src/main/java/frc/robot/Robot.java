@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.Autonomous;
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     //arduino.set();
+    CameraServer.startAutomaticCapture();
     LimeLight.ledOff();
     LimeLight.initCamera();
     LimeLight.stream();
@@ -44,13 +46,16 @@ public class Robot extends TimedRobot {
 
     LimeLight.ledOn();
     RobotMap.swerve.init();
-    RobotMap.intake.init();
+    RobotMap.intake.autoInit();
     RobotMap.mortar.init();
-    Autonomous.run();
+    
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+    Autonomous.run();
+  }
 
   @Override
   public void teleopInit() {
@@ -67,17 +72,17 @@ public class Robot extends TimedRobot {
 
     LimeLight.cameraMode(RobotMap.switchCamera);
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-    RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake));
+    RobotMap.intake.armControl();
+    RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake), RobotMap.operator.getRawButton(RobotMap.intakeOverride), RobotMap.driverElite.getRawButton(4));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
     RobotMap.climb.run();
     //RobotMap.swerve.autoInit();
-    Autonomous.recordAuto();
+    //Autonomous.recordAuto();
 
     //add a telemetry class
      SmartDashboard.putNumber("mortar velocity", RobotMap.mortar.getVelocity());
      SmartDashboard.putNumber("calculated velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()));
      SmartDashboard.putNumber("Calculated adjusted velocity", RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity());
-     SmartDashboard.putNumber("adjust velocity", RobotMap.mortar.adjustVelocity());
   }
 
   @Override
@@ -87,7 +92,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
 
     RobotMap.swerve.disabled();
-    RobotMap.climb.disabled();
+    //RobotMap.climb.disabled();
   }
 
   @Override

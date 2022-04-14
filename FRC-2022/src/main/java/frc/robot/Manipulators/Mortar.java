@@ -1,11 +1,11 @@
 package frc.robot.Manipulators;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.Vision.LimeLight;
 
@@ -15,9 +15,12 @@ public class Mortar {
     private TalonFX mortarLeft;
     private TalonFX mortarRight;
     public double tune = 0.0;
+    //public double movingVelocity = 0.0;
+    //public double lastTimeStamp = 0;
+    //public double lastVelocity = 0;
+    public boolean readyToFire = false;
+    //public boolean equal = false;
     
-    
-
     // mortar constructor
     public Mortar (int mortarLeft, int mortarRight){
 
@@ -31,7 +34,6 @@ public class Mortar {
 
         mortarLeft.configFactoryDefault();
         mortarRight.configFactoryDefault();
-
 
         mortarRight.setInverted(true);
 
@@ -50,8 +52,8 @@ public class Mortar {
         mortarRight.configPeakOutputForward(1);
         mortarRight.configPeakOutputReverse(-1);
 
-        mortarLeft.configOpenloopRamp(0.5);
-        mortarRight.configOpenloopRamp(0.5);
+        mortarLeft.configOpenloopRamp(0.1);
+        mortarRight.configOpenloopRamp(0.1);
         
         
         mortarRight.config_kF(0, 0.048);
@@ -62,12 +64,15 @@ public class Mortar {
         mortarLeft.config_kI(0, 0.001);
         mortarRight.config_IntegralZone(0, 300);
         mortarLeft.config_IntegralZone(0, 300);
+
+        /*lastTimeStamp = Timer.getFPGATimestamp();
+        lastVelocity = 0;*/
     }
 
     // calculate mortar velocity
     public double calculateVelocity(double y){
 
-        return ((12213 * Math.pow(y, 3)) + (8850.5 * Math.pow(y, 2)) + (-2341.6 * y) + 5680.5);
+        return ((11212 * Math.pow(y, 4)) + (-210.25 * Math.pow(y, 3)) + (479.97 * Math.pow(y, 2)) + (-1692.4 * y) + 5796.6);
     }
 
     // manual velocity adjustment
@@ -86,6 +91,21 @@ public class Mortar {
         return tune;
     }
 
+    /*public double movingAdjustment(){
+
+        double velocity = calculateVelocity(LimeLight.getY());
+        double dt = Timer.getFPGATimestamp() - lastTimeStamp;
+
+        double Rate = (velocity - lastVelocity) / 0.02;
+
+        movingVelocity = 2 * Rate;
+
+        lastTimeStamp = Timer.getFPGATimestamp();
+        lastVelocity = velocity;
+
+        return movingVelocity;
+    }*/
+
     public double getVelocity(){
         
         return mortarLeft.getSelectedSensorVelocity();
@@ -98,6 +118,16 @@ public class Mortar {
 
         double highVelocity = 6650 + adjustVelocity();
         double lowVelocity = 5100 + adjustVelocity();
+
+        if (getVelocity() > mortarVelocity - 25){
+
+            readyToFire = true;
+        } else{
+
+            readyToFire = false;
+        }
+
+        SmartDashboard.putBoolean("Ready To Fire", readyToFire);
 
         if (score){
 
@@ -125,8 +155,8 @@ public class Mortar {
         else{
 
             // idling mortar speed
-            mortarLeft.set(ControlMode.Velocity, 2000);
-            mortarRight.set(ControlMode.Velocity, 2000);
+            mortarLeft.set(ControlMode.Velocity, 3000);
+            mortarRight.set(ControlMode.Velocity, 3000);
         }
     }
     

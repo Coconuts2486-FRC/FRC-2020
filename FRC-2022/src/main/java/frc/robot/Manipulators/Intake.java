@@ -4,8 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -13,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.ColorSensor;
 import frc.robot.RobotMap;
-import frc.robot.Vision.LimeLight;
 
 public class Intake {
     public static SendableChooser allianceChooser = new SendableChooser<>();
@@ -24,6 +21,7 @@ public class Intake {
     private TalonSRX upperMortarIntake;
     private Solenoid lift;
     private static boolean pistonactive = false;
+    private static boolean sensorActive = false;
 
 
     // intake constructor
@@ -32,7 +30,7 @@ public class Intake {
         this.intakeMain = new TalonFX(intakeMain);
         this.lowerMortarIntake = new TalonSRX(lowarMortarIntake);
         this.upperMortarIntake = new TalonSRX(upperMortarIntake);
-        this.lift = new Solenoid(1, PneumaticsModuleType.REVPH, lift);
+        this.lift = new Solenoid(PneumaticsModuleType.CTREPCM, lift);
     }
 
     // initializes intake components
@@ -41,14 +39,26 @@ public class Intake {
         lowerMortarIntake.setNeutralMode(NeutralMode.Brake);
         upperMortarIntake.setNeutralMode(NeutralMode.Brake);
         intakeMain.configOpenloopRamp(0);
-        lowerMortarIntake.configOpenloopRamp(0.25);
-        upperMortarIntake.configOpenloopRamp(0.25);
+        lowerMortarIntake.configOpenloopRamp(0.1);
+        upperMortarIntake.configOpenloopRamp(0.1);
         lift.set(false);
         RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
     }
 
-    // set piston down in auto
-    public void autoLift(){
+    // init intake in auto
+    public void autoInit(){
+
+        intakeMain.setNeutralMode(NeutralMode.Brake);
+        lowerMortarIntake.setNeutralMode(NeutralMode.Brake);
+        upperMortarIntake.setNeutralMode(NeutralMode.Brake);
+        intakeMain.configOpenloopRamp(0);
+        lowerMortarIntake.configOpenloopRamp(0);
+        upperMortarIntake.configOpenloopRamp(0);
+        lift.set(true);
+        RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
+    }
+
+    public void autoDropArm(){
 
         lift.set(true);
     }
@@ -63,8 +73,7 @@ public class Intake {
 
     }
 
-    // intake control
-    public void run(boolean intake){
+    public void armControl(){
 
         // intake arm control
         if (RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift)){
@@ -77,36 +86,42 @@ public class Intake {
                 pistonactive = false;
             }
         }
+    }
+
+    // intake control
+    public void run(boolean intake, boolean mortarIntake, boolean outtake){
 
         // main intake control; rejects opposing alliance balls
         if (Timer.getFPGATimestamp() - RobotMap.outtakingTimer < 0.5) {
             lift.set(false);
             intakeMain.set(ControlMode.PercentOutput, -0.9);
-        } else if (intake || RobotMap.mortar.getVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold)){
+        } else if (intake || mortarIntake){
 
-            intakeMain.set(ControlMode.PercentOutput, 0.5);
+            intakeMain.set(ControlMode.PercentOutput, 1);
         } else {
             intakeMain.set(ControlMode.PercentOutput, 0);
             RobotMap.outtaking = false;
         }
 
-        if (ColorSensor.DetectedColor().equals(allianceChooser.getSelected()) && !RobotMap.outtaking) {
+       /* if (ColorSensor.DetectedColor().equals(allianceChooser.getSelected()) && !RobotMap.outtaking) {
 
             RobotMap.outtaking = true;
             RobotMap.outtakingTimer = Timer.getFPGATimestamp();
         }
-
+*/     
         // outtake
-        if (RobotMap.driverElite.getRawButton(4)){
+        if (outtake){
 
-            intakeMain.set(ControlMode.PercentOutput, -0.5);
+            intakeMain.set(ControlMode.PercentOutput, -1);
         }
 
         // secondary intake control
-        if (RobotMap.operator.getRawButton(RobotMap.intakeOverride) || RobotMap.mortar.getVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold) && RobotMap.operator.getRawButton(RobotMap.override) == false){
 
-            lowerMortarIntake.set(ControlMode.PercentOutput, 0.5);
-            upperMortarIntake.set(ControlMode.PercentOutput, 0.5);
+        /* || RobotMap.mortar.getVelocity() > ((RobotMap.mortar.calculateVelocity(LimeLight.getY()) + RobotMap.mortar.adjustVelocity()) - RobotMap.threshold) && RobotMap.operator.getRawButton(RobotMap.override) == false*/
+        if (mortarIntake){
+
+            lowerMortarIntake.set(ControlMode.PercentOutput, 1);
+            upperMortarIntake.set(ControlMode.PercentOutput, 1);
         } else{
 
             lowerMortarIntake.set(ControlMode.PercentOutput, 0);

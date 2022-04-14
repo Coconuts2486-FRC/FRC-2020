@@ -43,7 +43,6 @@ public class Track{
                         } else if (tx < 1.0) {
                                 steering_adjust = Kp * heading_error_X + min_command;
                         }
-
                 }
                 return steering_adjust;
         }

@@ -41,6 +41,6 @@ for log in data:
 			data = data.replace("Auto recording end", "")
 			file.write(data + "},\n")
 
-file.write("{" + str(log["timestamp"] - first_timestamp + 0.0001) + ", 0, 0, 0, 0, 0, 0 }")
+file.write("{" + str(log["timestamp"] - first_timestamp + 0.0001) + ", 0, 0, 0, 0, 0, 0, 0, 0 }")
 file.write("};\n}")
 file.close()

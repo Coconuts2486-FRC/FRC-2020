@@ -1,19 +1,13 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.Drivetrain.Module;
@@ -49,11 +43,11 @@ public class RobotMap {
     public static int lowerMortarIntake = 12;
     public static int upperMortarIntake = 11;
 
-    // intake pistion
-    public static int lift = 15;
+    // intake piston
+    public static int lift = 3;
 
     // climb piston
-    public static int climblock = 7;
+    public static int climblock = 2;
     
 
     // controllers
@@ -72,11 +66,11 @@ public class RobotMap {
     public static int eliteIntakeLift = 5;
     public static int eliteIntake = 6;
     public static int eliteZeroGyro = 9;
-    public static int eliteTrackBall = 2;
     public static int switchCamera = 8;
 
     // logitech (co-driver)
     public static XboxController operator = new XboxController(1);
+    public static int toMid = 9;
     public static int led = 10;
     public static int scoreHigh = 5;
     public static int scoreLow = 6;
@@ -120,7 +114,7 @@ public class RobotMap {
     // intake
     public static Intake intake = new Intake(intakeMain, lowerMortarIntake, upperMortarIntake, lift);
     public static float intakeTimer = 0;
-    public static int threshold = 75;
+    public static int threshold = 40;
 
     public static boolean outtaking = false;
     public static double outtakingTimer = 0;
@@ -132,8 +126,8 @@ public class RobotMap {
     public static Climber climb = new Climber(climbMotor, climblock);
 
     // Pnuematics
-    public static Compressor compressor = new Compressor(1, PneumaticsModuleType.REVPH);
+    public static Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
     // pdp
-    PowerDistribution pdp = new PowerDistribution(16, ModuleType.kRev);
+    PowerDistribution pdp = new PowerDistribution(1, ModuleType.kRev);
 }

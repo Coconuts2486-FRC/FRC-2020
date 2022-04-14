@@ -153,8 +153,8 @@ public class Swerve {
         // drive inputs
         double twist = 0.0;
         double twistAdjustment = Track.adjustYaw(track);
-        double twistDeadband = 0.4;
-        double directionDeadband = 0.2;
+        double twistDeadband = 0.1;
+        double directionDeadband = 0.1;
 
         // twist deadband and goal centric assist
         if (Math.abs(z) < twistDeadband || track) {
@@ -183,15 +183,6 @@ public class Swerve {
             y = (1 / (1 - directionDeadband)) * (y + -Math.signum(y) * directionDeadband);
         }
 
-        // drive staright assist
-        if (twist == 0 && track == false) {
-            twistAdjustment = yawCorrection(0);
-        } else {
-
-            twistAdjustment = Track.adjustYaw(track);
-            RobotMap.gyro.setYaw(0);
-        }
-
         // distance assist for firing at 6-7 feet for low and high port
         if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
 
@@ -211,8 +202,8 @@ public class Swerve {
         // drive inputs
         double twist = 0.0;
         double twistAdjustment = Track.adjustYaw(track);
-        double twistDeadband = 0.4;
-        double directionDeadband = 0.2;
+        double twistDeadband = 0.1;
+        double directionDeadband = 0.1;
 
         // twist deadband and goal centric assist
         if (Math.abs(z) < twistDeadband || track) {
