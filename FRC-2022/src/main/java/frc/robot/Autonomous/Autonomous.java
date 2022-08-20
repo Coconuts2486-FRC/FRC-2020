@@ -4,7 +4,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.Autonomous.autos.fiveBall60;
+import frc.robot.Autonomous.autos.threeBallSpicy53;
+import frc.robot.Autonomous.autos.twoBallSpazProof60;
 import frc.robot.Autonomous.autos.fiveBall;
+import frc.robot.Autonomous.autos.fiveBall58;
 import frc.robot.Autonomous.autos.twoBall;
 import frc.robot.Autonomous.autos.twoBallOneDef;
 
@@ -41,15 +45,17 @@ public class Autonomous {
                 + ", " + boolToInt(RobotMap.operator.getRawButton(RobotMap.score))
                 + ", " + boolToInt(RobotMap.operator.getRawButton(RobotMap.intakeOverride))
                 + ", " + boolToInt(RobotMap.driverElite.getRawButton(4))
+                + ", " + boolToInt(RobotMap.driverElite.getRawButton(RobotMap.eliteIntakeLift))
                 // + ", " + RobotMap.Ids.joystick.getRawButton(5));
                 + " Auto recording end");
     }
 
     // allows us to select our auto path
     public static void chooser() {
-        autoChooser.setDefaultOption("Two Ball", 1);
-        autoChooser.addOption("One Ball Defence", 2);
-        autoChooser.addOption("Five Ball", 3);
+        autoChooser.setDefaultOption("Two Ball Normal", 1);
+        autoChooser.addOption("Three Ball Spicy", 2);
+        autoChooser.addOption("Five Ball (60)", 3);
+        autoChooser.addOption("Five Ball Backup (58)", 4);
         SmartDashboard.putData("Auto Modes", autoChooser);
 
     }
@@ -62,16 +68,19 @@ public class Autonomous {
     public static void run() {
 
         double autoTimer = (Timer.getFPGATimestamp() * 1000) + 1;
-        double[][] recorded_input = twoBall.positions;
+        double[][] recorded_input = twoBallSpazProof60.positions;
 
         if (getSelectedAuto() == 1) {
-            recorded_input = twoBall.positions;
+            recorded_input = twoBallSpazProof60.positions;
         }
         else if (getSelectedAuto() == 2){
-            recorded_input = twoBallOneDef.positions;
+            recorded_input = threeBallSpicy53.positions;
         }
         else if (getSelectedAuto() == 3) {
-            recorded_input = fiveBall.positions;
+            recorded_input = fiveBall60.positions;
+        }
+        else if (getSelectedAuto() == 4) {
+            recorded_input = fiveBall58.positions;
         }
         
         int length = recorded_input.length - 1;
@@ -83,6 +92,7 @@ public class Autonomous {
             if ((recorded_input[i][0] * 1000) < currentTimer - autoTimer) {
                 RobotMap.swerve.autoRun(recorded_input[i][1], recorded_input[i][2], recorded_input[i][3], intToBool((int) recorded_input[i][5]));
                 RobotMap.intake.run(intToBool((int) recorded_input[i][4]), intToBool((int) recorded_input[i][7]), intToBool((int) recorded_input[i][8]));
+                RobotMap.intake.armControl(intToBool((int) recorded_input[i][9]));
                 RobotMap.mortar.run(intToBool((int) recorded_input[i][6]));
             } else {
                 i--;

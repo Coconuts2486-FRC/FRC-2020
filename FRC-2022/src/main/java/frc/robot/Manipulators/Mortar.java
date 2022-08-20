@@ -72,7 +72,7 @@ public class Mortar {
     // calculate mortar velocity
     public double calculateVelocity(double y){
 
-        return ((11212 * Math.pow(y, 4)) + (-210.25 * Math.pow(y, 3)) + (479.97 * Math.pow(y, 2)) + (-1692.4 * y) + 5796.6);
+        return ((11212 * Math.pow(y, 4)) + (-210.25 * Math.pow(y, 3)) + (479.97 * Math.pow(y, 2)) + (-1692.4 * y) + 5896.6);
     }
 
     // manual velocity adjustment

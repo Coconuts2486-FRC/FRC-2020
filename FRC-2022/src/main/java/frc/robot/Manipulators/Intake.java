@@ -54,7 +54,7 @@ public class Intake {
         intakeMain.configOpenloopRamp(0);
         lowerMortarIntake.configOpenloopRamp(0);
         upperMortarIntake.configOpenloopRamp(0);
-        lift.set(true);
+        lift.set(false);
         RobotMap.intakeTimer = (float) Timer.getFPGATimestamp();
     }
 
@@ -73,10 +73,10 @@ public class Intake {
 
     }
 
-    public void armControl(){
+    public void armControl(boolean liftArm){
 
         // intake arm control
-        if (RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift)){
+        if (liftArm){
             if (!pistonactive){
                 lift.set(true);
                 pistonactive = true;

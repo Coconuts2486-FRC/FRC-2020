@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
 
     LimeLight.ledOn();
     RobotMap.swerve.init();
+    RobotMap.climb.init();
     RobotMap.intake.autoInit();
     RobotMap.mortar.init();
     
@@ -72,7 +73,7 @@ public class Robot extends TimedRobot {
 
     LimeLight.cameraMode(RobotMap.switchCamera);
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
-    RobotMap.intake.armControl();
+    RobotMap.intake.armControl(RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake), RobotMap.operator.getRawButton(RobotMap.intakeOverride), RobotMap.driverElite.getRawButton(4));
     RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
     RobotMap.climb.run();
