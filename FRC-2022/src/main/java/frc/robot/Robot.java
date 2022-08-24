@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
     RobotMap.swerve.run(RobotMap.driverElite.getRawAxis(4), RobotMap.driverElite.getRawAxis(5), RobotMap.driverElite.getRawAxis(0), RobotMap.driverElite.getRawButton(RobotMap.eliteTrackTarget));
     RobotMap.intake.armControl(RobotMap.driverElite.getRawButtonPressed(RobotMap.eliteIntakeLift));
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake), RobotMap.operator.getRawButton(RobotMap.intakeOverride), RobotMap.driverElite.getRawButton(4));
-    RobotMap.mortar.run(RobotMap.operator.getRawButton(RobotMap.score));
+    RobotMap.mortar.run(RobotMap.operator.getRawAxis(RobotMap.score));
     RobotMap.climb.run();
     //RobotMap.swerve.autoInit();
     //Autonomous.recordAuto();

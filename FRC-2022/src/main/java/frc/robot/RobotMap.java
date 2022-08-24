@@ -70,18 +70,34 @@ public class RobotMap {
 
     // logitech (co-driver)
     public static XboxController operator = new XboxController(1);
-    public static int toMid = 9;
-    public static int led = 10;
-    public static int scoreHigh = 5;
-    public static int scoreLow = 6;
-    public static int override = 7;
-    public static int score = 8;
-    public static int intakeOverride = 1;
-    public static int ascend = 12;
-    public static int descend = 11;
+    public static int toMid = 7;
+    public static int led = 8;
+    public static int scoreHigh = 6;
+    public static int scoreLow = 5;
+    public static int override = 2;
+    public static int score = 3;
+    public static int intakeOverride = 3;
+    public static int slowClimb = 1;
+    public static int fastClimb = 5;
     public static int increaseMortarVelocity = 2;
-    public static int decreaseMortarVelocity = 3;
+    public static int decreaseMortarVelocity = 1;
     public static int climbPiston = 4;
+
+    //OLD LOGITECH BUTTONS
+    //  // logitech (co-driver)
+    //  public static XboxController operator = new XboxController(1);
+    //  public static int toMid = 9;
+    //  public static int led = 10;
+    //  public static int scoreHigh = 5;
+    //  public static int scoreLow = 6;
+    //  public static int override = 7;
+    //  public static int score = 8;
+    //  public static int intakeOverride = 1;
+    //  public static int ascend = 12;
+    //  public static int descend = 11;
+    //  public static int increaseMortarVelocity = 2;
+    //  public static int decreaseMortarVelocity = 3;
+    //  public static int climbPiston = 4;
 
     // encoders
 

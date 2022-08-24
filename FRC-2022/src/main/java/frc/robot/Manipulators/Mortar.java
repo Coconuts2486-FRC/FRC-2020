@@ -112,7 +112,7 @@ public class Mortar {
     }
 
     // mortar control
-    public void run(boolean score){
+    public void run(double score){
 
         double mortarVelocity = calculateVelocity(LimeLight.getY()) + adjustVelocity();
 
@@ -129,7 +129,7 @@ public class Mortar {
 
         SmartDashboard.putBoolean("Ready To Fire", readyToFire);
 
-        if (score){
+        if (score > 0.1){
 
             mortarLeft.set(TalonFXControlMode.Velocity, mortarVelocity);
             mortarRight.set(TalonFXControlMode.Velocity, mortarVelocity);
@@ -146,7 +146,7 @@ public class Mortar {
             mortarLeft.set(ControlMode.Velocity, lowVelocity);//5100
             mortarRight.set(ControlMode.Velocity, lowVelocity);
         }
-        else if (RobotMap.operator.getRawButton(RobotMap.override)){
+        else if (RobotMap.operator.getRawAxis(RobotMap.override) > 0.1){
 
             // high goal manual scoring speed for 6-7 feet away
             mortarLeft.set(ControlMode.Velocity, highVelocity);//6650

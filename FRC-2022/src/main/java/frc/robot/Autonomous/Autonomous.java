@@ -93,7 +93,7 @@ public class Autonomous {
                 RobotMap.swerve.autoRun(recorded_input[i][1], recorded_input[i][2], recorded_input[i][3], intToBool((int) recorded_input[i][5]));
                 RobotMap.intake.run(intToBool((int) recorded_input[i][4]), intToBool((int) recorded_input[i][7]), intToBool((int) recorded_input[i][8]));
                 RobotMap.intake.armControl(intToBool((int) recorded_input[i][9]));
-                RobotMap.mortar.run(intToBool((int) recorded_input[i][6]));
+                // RobotMap.mortar.run(intToBool((int) recorded_input[i][6]));
             } else {
                 i--;
             }

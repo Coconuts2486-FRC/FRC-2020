@@ -55,16 +55,16 @@ public class Climber {
             output = 0;
         }
 
-        else if (Math.abs(RobotMap.operator.getRawAxis(1)) > 0.2){
+        else if (Math.abs(RobotMap.operator.getRawAxis(RobotMap.slowClimb)) > 0.2){
 
             climbSpeed = -0.5;
-            output = climbSpeed * RobotMap.operator.getRawAxis(1);
+            output = climbSpeed * RobotMap.operator.getRawAxis(RobotMap.slowClimb);
         }
 
-        else if (Math.abs(RobotMap.operator.getRawAxis(3)) > 0.1){
+        else if (Math.abs(RobotMap.operator.getRawAxis(RobotMap.fastClimb)) > 0.1){
 
             climbSpeed = -1;
-            output = climbSpeed * RobotMap.operator.getRawAxis(3);
+            output = climbSpeed * RobotMap.operator.getRawAxis(RobotMap.fastClimb);
         }
 
         else{
