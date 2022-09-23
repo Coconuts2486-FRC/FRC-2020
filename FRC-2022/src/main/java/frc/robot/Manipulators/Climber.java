@@ -50,7 +50,7 @@ public class Climber {
             output = kP * error;
         }
 
-        else if (climbPosition > maxHeight && RobotMap.operator.getRawAxis(1) < -0.2 || climbPosition > maxHeight && RobotMap.operator.getRawAxis(3) < -0.1){
+        else if (climbPosition > maxHeight && RobotMap.operator.getRawAxis(RobotMap.slowClimb) < -0.2 || climbPosition > maxHeight && RobotMap.operator.getRawAxis(RobotMap.fastClimb) < -0.1){
 
             output = 0;
         }
