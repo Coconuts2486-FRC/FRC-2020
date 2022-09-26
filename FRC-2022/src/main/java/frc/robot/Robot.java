@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
    // arduino.run();
    Autonomous.chooser();
    Intake.chooser();
-   LimeLight.ledControl(RobotMap.led);
   }
 
   @Override
@@ -77,6 +76,7 @@ public class Robot extends TimedRobot {
     RobotMap.intake.run(RobotMap.driverElite.getRawButton(RobotMap.eliteIntake), RobotMap.operator.getRawButton(RobotMap.intakeOverride), RobotMap.driverElite.getRawButton(4));
     RobotMap.mortar.run(RobotMap.operator.getRawAxis(RobotMap.score));
     RobotMap.climb.run();
+    LimeLight.ledControl(RobotMap.led);
     //RobotMap.swerve.autoInit();
     //Autonomous.recordAuto();
 
@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
 
     RobotMap.swerve.disabled();
+    LimeLight.ledControl(RobotMap.led);
     //RobotMap.climb.disabled();
   }
 

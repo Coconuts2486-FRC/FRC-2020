@@ -57,7 +57,7 @@ public class Climber {
 
         else if (Math.abs(RobotMap.operator.getRawAxis(RobotMap.slowClimb)) > 0.2){
 
-            climbSpeed = -0.5;
+            climbSpeed = -0.75;
             output = climbSpeed * RobotMap.operator.getRawAxis(RobotMap.slowClimb);
         }
 
@@ -74,17 +74,28 @@ public class Climber {
 
         climbMotor.set(TalonFXControlMode.PercentOutput, output);
 
+        // if (RobotMap.operator.getRawButtonPressed(RobotMap.climbPiston)){
+        //     if (!climbactive){
+
+        //         climbLock.set(true);
+        //         climbactive = true;
+        //     } else{
+
+        //         climbLock.set(false);
+        //         climbactive = false;
+        //     }
+        // }
+
         if (RobotMap.operator.getRawButtonPressed(RobotMap.climbPiston)){
             if (!climbactive){
-
-                climbLock.set(true);
                 climbactive = true;
             } else{
-
-                climbLock.set(false);
                 climbactive = false;
             }
+            
         }
+        climbLock.set(climbactive);
+        
     }
     
 }

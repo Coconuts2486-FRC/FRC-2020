@@ -78,15 +78,29 @@ public class Intake {
         // intake arm control
         if (liftArm){
             if (!pistonactive){
-                lift.set(true);
                 pistonactive = true;
             } else{
  
-                lift.set(false);
                 pistonactive = false;
             }
         }
+        lift.set(pistonactive);
     }
+
+    // public void armControl(boolean liftArm){
+
+    //     // intake arm control
+    //     if (liftArm){
+    //         if (!pistonactive){
+    //             lift.set(true);
+    //             pistonactive = true;
+    //         } else{
+ 
+    //             lift.set(false);
+    //             pistonactive = false;
+    //         }
+    //     }
+    // }
 
     // intake control
     public void run(boolean intake, boolean mortarIntake, boolean outtake){
