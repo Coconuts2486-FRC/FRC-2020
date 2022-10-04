@@ -74,27 +74,18 @@ public class Climber {
 
         climbMotor.set(TalonFXControlMode.PercentOutput, output);
 
-        // if (RobotMap.operator.getRawButtonPressed(RobotMap.climbPiston)){
-        //     if (!climbactive){
-
-        //         climbLock.set(true);
-        //         climbactive = true;
-        //     } else{
-
-        //         climbLock.set(false);
-        //         climbactive = false;
-        //     }
-        // }
-
         if (RobotMap.operator.getRawButtonPressed(RobotMap.climbPiston)){
             if (!climbactive){
+
+                climbLock.set(true);
                 climbactive = true;
             } else{
+
+                climbLock.set(false);
                 climbactive = false;
             }
-            
         }
-        climbLock.set(climbactive);
+
         
     }
     
