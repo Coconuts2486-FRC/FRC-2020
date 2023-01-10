@@ -70,12 +70,7 @@ public class Swerve {
         double r = Math.sqrt((L * L) + (W * W));
 
         // field centric adjustment
-        if (RobotMap.operator.getRawButton(RobotMap.scoreLow) || RobotMap.operator.getRawButton(RobotMap.scoreHigh)) {
-
-            x = x * 1;
-            y = y * -1;
-        } else {
-
+        if (!RobotMap.driverElite.getRawButton(3)) {
             double x0 = y * Math.cos(robotAngle) + x * Math.sin(robotAngle);
             x = -y * Math.sin(robotAngle) + x * Math.cos(robotAngle);
             y = x0;
